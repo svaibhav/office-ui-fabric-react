@@ -5,16 +5,9 @@ import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Selection, SelectionZone } from 'office-ui-fabric-react/lib/Selection';
 import { MarqueeSelection } from 'office-ui-fabric-react/lib/MarqueeSelection';
 import { AnimationClassNames } from 'office-ui-fabric-react/lib/Styling';
-import {
-  IExampleGroup,
-  IExampleItem,
-  createGroup,
-  createDocumentItems,
-  getTileCells,
-  createShimmerGroups
-} from './ExampleHelpers';
+import { IExampleGroup, IExampleItem, createGroup, createDocumentItems, getTileCells, createShimmerGroups } from './ExampleHelpers';
 import { ISize } from '@uifabric/experiments/lib/Utilities';
-import { ShimmerElementType as ElemType, ShimmerElementsGroup } from '@uifabric/experiments/lib/Shimmer';
+import { ShimmerElementType, ShimmerElementsGroup } from 'office-ui-fabric-react/lib/Shimmer';
 
 const HEADER_VERTICAL_PADDING = 13;
 const HEADER_FONT_SIZE = 18;
@@ -49,16 +42,14 @@ export interface ITilesListDocumentExampleState {
   isModalSelection: boolean;
   isDataLoaded: boolean;
   cells: (ITilesGridItem<IExampleItem> | ITilesGridSegment<IExampleItem>)[];
+  isFluentStyling: boolean;
 }
 
 export interface ITilesListDocumentExampleProps {
   tileSize: 'large' | 'small';
 }
 
-export class TilesListDocumentExample extends React.Component<
-  ITilesListDocumentExampleProps,
-  ITilesListDocumentExampleState
-> {
+export class TilesListDocumentExample extends React.Component<ITilesListDocumentExampleProps, ITilesListDocumentExampleState> {
   private _selection: Selection;
 
   constructor(props: ITilesListDocumentExampleProps) {
@@ -74,6 +65,7 @@ export class TilesListDocumentExample extends React.Component<
     this.state = {
       isModalSelection: this._selection.isModal(),
       isDataLoaded: false,
+      isFluentStyling: false,
       cells: getTileCells(SHIMMER_GROUPS, {
         onRenderCell: this._onRenderShimmerCell,
         onRenderHeader: this._onRenderShimmerHeader,
@@ -83,9 +75,9 @@ export class TilesListDocumentExample extends React.Component<
     };
   }
 
-  public componentDidUpdate(previousProps: ITilesListDocumentExampleProps): void {
+  public componentDidUpdate(previousProps: ITilesListDocumentExampleProps, prevState: ITilesListDocumentExampleState): void {
     const { isDataLoaded } = this.state;
-    if (this.props.tileSize !== previousProps.tileSize) {
+    if (this.props.tileSize !== previousProps.tileSize || this.state.isFluentStyling !== prevState.isFluentStyling) {
       if (!isDataLoaded) {
         this.setState({
           cells: getTileCells(SHIMMER_GROUPS, {
@@ -124,6 +116,13 @@ export class TilesListDocumentExample extends React.Component<
           onChange={this._onToggleIsDataLoaded}
           onText="Loaded"
           offText="Loading..."
+        />
+        <Toggle
+          label="Enable Fluent Styling"
+          checked={this.state.isFluentStyling}
+          onChange={this._onToggleIsFluentStyling}
+          onText="Fluent"
+          offText="Default"
         />
         <MarqueeSelection selection={this._selection}>
           <SelectionZone selection={this._selection} onItemInvoked={this._onItemInvoked} enterModalOnTouch={true}>
@@ -164,6 +163,17 @@ export class TilesListDocumentExample extends React.Component<
     });
   };
 
+  private _onToggleIsFluentStyling = (event: React.MouseEvent<HTMLElement>, checked: boolean): void => {
+    this.setState(
+      {
+        isFluentStyling: checked
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
+  };
+
   private _onSelectionChange = (): void => {
     this.setState({
       isModalSelection: this._selection.isModal()
@@ -189,6 +199,7 @@ export class TilesListDocumentExample extends React.Component<
         className={AnimationClassNames.fadeIn400}
         selection={this._selection}
         selectionIndex={item.index}
+        isFluentStyling={this.state.isFluentStyling}
         invokeSelection={true}
         foreground={
           <img
@@ -212,15 +223,7 @@ export class TilesListDocumentExample extends React.Component<
   private _onRenderShimmerCell = (item: IExampleItem, finalSize: ISize): JSX.Element => {
     const { tileSize } = this.props;
 
-    return (
-      <ShimmerTile
-        contentSize={finalSize}
-        itemName={true}
-        itemActivity={true}
-        itemThumbnail={true}
-        tileSize={tileSize}
-      />
-    );
+    return <ShimmerTile contentSize={finalSize} itemName={true} itemActivity={true} itemThumbnail={true} tileSize={tileSize} />;
   };
 
   private _onRenderHeader = (item: IExampleItem): JSX.Element => {
@@ -244,8 +247,8 @@ export class TilesListDocumentExample extends React.Component<
     return (
       <ShimmerElementsGroup
         shimmerElements={[
-          { type: ElemType.line, height: HEADER_FONT_SIZE, widthInPercentage: 100 }, // gap is given to maintain height
-          { type: ElemType.gap, height: HEADER_VERTICAL_PADDING * 2 + HEADER_FONT_SIZE, widthInPixel: 0 }
+          { type: ShimmerElementType.line, height: HEADER_FONT_SIZE, width: '100%' }, // gap is given to maintain height
+          { type: ShimmerElementType.gap, height: HEADER_VERTICAL_PADDING * 2 + HEADER_FONT_SIZE, width: 0 }
         ]}
       />
     );

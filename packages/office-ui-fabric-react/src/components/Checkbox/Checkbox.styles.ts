@@ -1,5 +1,14 @@
 import { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types';
-import { getFocusStyle, FontSizes, HighContrastSelector } from '../../Styling';
+import { FontSizes, HighContrastSelector, getGlobalClassNames } from '../../Styling';
+import { IsFocusVisibleClassName } from '../../Utilities';
+
+const GlobalClassNames = {
+  root: 'ms-Checkbox',
+  label: 'ms-Checkbox-label',
+  checkbox: 'ms-Checkbox-checkbox',
+  checkmark: 'ms-Checkbox-checkmark',
+  text: 'ms-Checkbox-text'
+};
 
 const MS_CHECKBOX_LABEL_SIZE = '20px';
 const MS_CHECKBOX_TRANSITION_DURATION = '200ms';
@@ -7,40 +16,38 @@ const MS_CHECKBOX_TRANSITION_TIMING = 'cubic-bezier(.4, 0, .23, 1)';
 
 export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
   const { className, theme, reversed, checked, disabled, isUsingCustomLabelRender } = props;
-  const { semanticColors } = theme;
+  const { semanticColors, effects, palette } = theme;
+
+  const classNames = getGlobalClassNames(GlobalClassNames, theme);
+
   const checkmarkFontColor = semanticColors.inputForegroundChecked;
-  const checkmarkFontColorCheckedDisabled = semanticColors.disabledBackground;
-  const checkmarkFontColorHovered = semanticColors.inputBorder;
-  const checkboxBorderColor = semanticColors.smallInputBorder;
+  // TODO: after updating the semanticColors slots mapping this needs to be semanticColors.inputBorder
+  const checkmarkFontColorHovered = palette.neutralSecondary;
+  // TODO: after updating the semanticColors slots mapping this needs to be semanticColors.smallInputBorder
+  const checkboxBorderColor = palette.neutralPrimary;
   const checkboxBorderColorChecked = semanticColors.inputBackgroundChecked;
-  const checkboxBorderColorDisabled = semanticColors.disabledBodyText;
+  const checkboxBorderColorDisabled = semanticColors.disabledBodySubtext;
   const checkboxBorderHoveredColor = semanticColors.inputBorderHovered;
   const checkboxBackgroundChecked = semanticColors.inputBackgroundChecked;
-  const checkboxBackgroundCheckedHovered = semanticColors.inputBackgroundCheckedHovered;
-  const checkboxBorderColorCheckedHovered = semanticColors.inputBackgroundCheckedHovered;
-  const checkboxHoveredTextColor = semanticColors.bodyText;
-  const checkboxBackgroundDisabledChecked = semanticColors.disabledBodyText;
+  // TODO: after updating the semanticColors slots mapping following 2 tokens need to be semanticColors.inputBackgroundCheckedHovered
+  const checkboxBackgroundCheckedHovered = palette.themeDark;
+  const checkboxBorderColorCheckedHovered = palette.themeDark;
+  const checkboxHoveredTextColor = semanticColors.inputTextHovered;
+  const checkboxBackgroundDisabledChecked = semanticColors.disabledBodySubtext;
   const checkboxTextColor = semanticColors.bodyText;
   const checkboxTextColorDisabled = semanticColors.disabledText;
 
   return {
     root: [
-      'ms-Checkbox',
+      classNames.root,
+      {
+        position: 'relative',
+        display: 'flex'
+      },
       reversed && 'reversed',
       checked && 'is-checked',
       !disabled && 'is-enabled',
       disabled && 'is-disabled',
-      getFocusStyle(theme, -3),
-      theme.fonts.medium,
-      {
-        padding: '0',
-        border: 'none',
-        background: 'none',
-        margin: '0',
-        outline: 'none',
-        display: 'block',
-        cursor: 'pointer'
-      },
       !disabled && [
         !checked && {
           selectors: {
@@ -105,11 +112,30 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
       ],
       className
     ],
+    input: [
+      {
+        position: 'absolute',
+        background: 'none',
+
+        opacity: 0,
+        selectors: {
+          [`.${IsFocusVisibleClassName} &:focus + label::before`]: {
+            outline: '1px solid ' + theme.palette.neutralSecondary,
+            outlineOffset: '2px',
+            selectors: {
+              [HighContrastSelector]: {
+                outline: '1px solid ActiveBorder'
+              }
+            }
+          }
+        }
+      }
+    ],
     label: [
-      'ms-Checkbox-label',
+      classNames.label,
+      theme.fonts.medium,
       {
         display: 'flex',
-        margin: '0 -4px',
         alignItems: isUsingCustomLabelRender ? 'center' : 'flex-start',
         cursor: disabled ? 'default' : 'pointer',
         position: 'relative',
@@ -119,10 +145,23 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
       reversed && {
         flexDirection: 'row-reverse',
         justifyContent: 'flex-end'
+      },
+      {
+        selectors: {
+          '&::before': {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            content: '""',
+            pointerEvents: 'none'
+          }
+        }
       }
     ],
     checkbox: [
-      'ms-Checkbox-checkbox',
+      classNames.checkbox,
       {
         display: 'flex',
         flexShrink: 0,
@@ -130,10 +169,8 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
         justifyContent: 'center',
         height: MS_CHECKBOX_LABEL_SIZE,
         width: MS_CHECKBOX_LABEL_SIZE,
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: checkboxBorderColor,
-        margin: '0 4px',
+        border: `1px solid ${checkboxBorderColor}`,
+        borderRadius: effects.roundedCorner2,
         boxSizing: 'border-box',
         transitionProperty: 'background, border, border-color',
         transitionDuration: MS_CHECKBOX_TRANSITION_DURATION,
@@ -142,6 +179,17 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
         /* in case the icon is bigger than the box */
         overflow: 'hidden'
       },
+      !reversed
+        ? // this margin on the checkbox is for backwards compat.
+          // notably it has the effect where a customRender is used, there will be only a 4px margin from checkbox to label.
+          // the label by default would have another 4px margin for a total of 8px margin between checkbox and label.
+          // we don't combine the two (and move it into the text) to not incur a breaking change for everyone using custom render atm.
+          {
+            marginRight: 4
+          }
+        : {
+            marginLeft: 4
+          },
       !disabled &&
         checked && {
           background: checkboxBackgroundChecked,
@@ -154,7 +202,12 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
           }
         },
       disabled && {
-        borderColor: checkboxBorderColorDisabled
+        borderColor: checkboxBorderColorDisabled,
+        selectors: {
+          [HighContrastSelector]: {
+            borderColor: 'InactiveBorder'
+          }
+        }
       },
       checked &&
         disabled && {
@@ -163,10 +216,10 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
         }
     ],
     checkmark: [
-      'ms-Checkbox-checkmark',
+      classNames.checkmark,
       {
         opacity: checked ? '1' : '0',
-        color: checked && disabled ? checkmarkFontColorCheckedDisabled : checkmarkFontColor,
+        color: checkmarkFontColor,
         selectors: {
           [HighContrastSelector]: {
             color: disabled ? 'InactiveBorder' : 'Window',
@@ -176,12 +229,27 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
       }
     ],
     text: [
-      'ms-Checkbox-text',
+      classNames.text,
       {
         color: disabled ? checkboxTextColorDisabled : checkboxTextColor,
-        margin: '0 4px',
         fontSize: FontSizes.medium,
         lineHeight: '20px'
+      },
+      !reversed
+        ? {
+            marginLeft: 4
+          }
+        : {
+            marginRight: 4
+          },
+      disabled && {
+        selectors: {
+          [HighContrastSelector]: {
+            // backwards compat for the color of the text when the checkbox was rendered
+            // using a Button.
+            color: 'InactiveBorder'
+          }
+        }
       }
     ]
   };

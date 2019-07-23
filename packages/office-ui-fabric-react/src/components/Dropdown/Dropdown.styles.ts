@@ -1,5 +1,6 @@
 import { IDropdownStyles, IDropdownStyleProps } from './Dropdown.types';
-import { IStyleFunction } from '../../Utilities';
+import { IStyleFunction, IsFocusVisibleClassName } from '../../Utilities';
+import { RectangleEdge } from '../../utilities/positioning';
 import {
   FontSizes,
   FontWeights,
@@ -7,7 +8,10 @@ import {
   IRawStyle,
   IStyle,
   getGlobalClassNames,
-  normalize
+  normalize,
+  HighContrastSelectorWhite,
+  getScreenSelector,
+  ScreenWidthMinMedium
 } from '../../Styling';
 
 const GlobalClassNames = {
@@ -29,11 +33,10 @@ const GlobalClassNames = {
 };
 
 const DROPDOWN_HEIGHT = 32;
-const DROPDOWN_ITEMHEIGHT = 32;
+const DROPDOWN_ITEM_HEIGHT = 36;
 
 const highContrastAdjustMixin = {
-  // highContrastAdjust mixin
-  '@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: black-on-white)': {
+  [`${HighContrastSelector}, ${HighContrastSelectorWhite.replace('@media ', '')}`]: {
     MsHighContrastAdjust: 'none'
   }
 };
@@ -62,17 +65,21 @@ const highContrastBorderState: IRawStyle = {
   }
 };
 
+const MinimumScreenSelector = getScreenSelector(0, ScreenWidthMinMedium);
+
 export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = props => {
   const {
     theme,
     hasError,
+    hasLabel,
     className,
     isOpen,
     disabled,
     required,
     isRenderingPlaceholder,
     panelClassName,
-    calloutClassName
+    calloutClassName,
+    calloutRenderEdge
   } = props;
 
   if (!theme) {
@@ -80,14 +87,14 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
   }
 
   const globalClassnames = getGlobalClassNames(GlobalClassNames, theme);
-  const { palette, semanticColors } = theme;
+  const { palette, semanticColors, effects } = theme;
 
   const rootHoverFocusActiveSelectorNeutralDarkMixin: IStyle = {
-    color: palette.neutralDark
+    color: semanticColors.menuItemTextHovered
   };
 
-  const rootHoverFocusActiveSelectorBodySubtextMixin: IStyle = {
-    color: semanticColors.bodySubtext
+  const rootHoverFocusActiveSelectorNeutralPrimaryMixin: IStyle = {
+    color: palette.neutralPrimary
   };
 
   const borderColorError: IStyle = {
@@ -100,26 +107,56 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
       backgroundColor: 'transparent',
       boxSizing: 'border-box',
       cursor: 'pointer',
-      display: 'block',
-      padding: '4px 16px',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 8px',
       width: '100%',
-      minHeight: DROPDOWN_ITEMHEIGHT,
+      minHeight: DROPDOWN_ITEM_HEIGHT,
       lineHeight: 20,
       height: 'auto',
       position: 'relative',
       border: '1px solid transparent',
+      borderRadius: 0,
       wordWrap: 'break-word',
       overflowWrap: 'break-word',
       textAlign: 'left'
     }
   ];
 
+  const itemSelectors = (isSelected: boolean = false) => {
+    return {
+      selectors: {
+        '&:hover:focus': {
+          color: palette.neutralDark,
+          backgroundColor: !isSelected ? palette.neutralLighter : palette.neutralLight
+        },
+        '&:focus': {
+          backgroundColor: !isSelected ? 'transparent' : palette.neutralLight
+        },
+        '&:active': {
+          color: palette.neutralDark,
+          backgroundColor: !isSelected ? palette.neutralLighter : palette.neutralLight
+        },
+        [HighContrastSelector]: {
+          borderColor: 'Window'
+        },
+        [`.${IsFocusVisibleClassName} &:focus:after`]: {
+          left: 0,
+          top: 0,
+          bottom: 0,
+          right: 0
+        }
+      }
+    };
+  };
+
   const dropdownItemSelected: IStyle = [
     ...dropdownItemStyle,
     {
-      backgroundColor: palette.neutralQuaternaryAlt,
-      color: palette.black
+      backgroundColor: palette.neutralLight,
+      color: palette.neutralDark
     },
+    itemSelectors(true),
     highContrastItemAndTitleStateMixin
   ];
 
@@ -131,8 +168,18 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
     }
   ];
 
+  const titleOpenBorderRadius =
+    calloutRenderEdge === RectangleEdge.bottom
+      ? `${effects.roundedCorner2} ${effects.roundedCorner2} 0 0`
+      : `0 0 ${effects.roundedCorner2} ${effects.roundedCorner2}`;
+
+  const calloutOpenBorderRadius =
+    calloutRenderEdge === RectangleEdge.bottom
+      ? `0 0 ${effects.roundedCorner2} ${effects.roundedCorner2}`
+      : `${effects.roundedCorner2} ${effects.roundedCorner2} 0 0`;
+
   return {
-    root: globalClassnames.root,
+    root: [globalClassnames.root, className],
     label: globalClassnames.label,
     dropdown: [
       globalClassnames.dropdown,
@@ -140,46 +187,68 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
       {
         ...theme.fonts.medium,
         color: palette.neutralPrimary,
+        borderColor: palette.neutralSecondary,
         position: 'relative',
         outline: 0,
         userSelect: 'none',
         selectors: {
           ['&:hover .' + globalClassnames.title]: [
             !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
-            { borderColor: palette.neutralDark },
+            { borderColor: !isOpen ? palette.neutralPrimary : palette.themePrimary },
             highContrastBorderState
           ],
           ['&:focus .' + globalClassnames.title]: [
             !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
-            { borderColor: palette.themePrimary },
+            {
+              borderColor:
+                palette.themePrimary /* see https://github.com/OfficeDev/office-ui-fabric-react/pull/9182 for semantic color disc */
+            },
             highContrastItemAndTitleStateMixin
           ],
           ['&:active .' + globalClassnames.title]: [
             !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
-            { borderColor: palette.themeDark },
+            { borderColor: palette.themePrimary },
             highContrastBorderState
           ],
 
-          ['&:hover .' + globalClassnames.caretDown]: !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
+          ['&:hover .' + globalClassnames.caretDown]: !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin,
           ['&:focus .' + globalClassnames.caretDown]: [
-            !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
+            !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin,
             { selectors: { [HighContrastSelector]: { color: 'HighlightText' }, ...highContrastAdjustMixin } }
           ],
-          ['&:active .' + globalClassnames.caretDown]: !disabled && rootHoverFocusActiveSelectorNeutralDarkMixin,
+          ['&:active .' + globalClassnames.caretDown]: !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin,
 
-          ['&:hover .' + globalClassnames.titleIsPlaceHolder]: rootHoverFocusActiveSelectorBodySubtextMixin,
-          ['&:focus .' + globalClassnames.titleIsPlaceHolder]: rootHoverFocusActiveSelectorBodySubtextMixin,
-          ['&:active .' + globalClassnames.titleIsPlaceHolder]: rootHoverFocusActiveSelectorBodySubtextMixin,
+          ['&:hover .' + globalClassnames.titleIsPlaceHolder]: !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin,
+          ['&:focus .' + globalClassnames.titleIsPlaceHolder]: !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin,
+          ['&:active .' + globalClassnames.titleIsPlaceHolder]: !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin,
 
           ['&:hover .' + globalClassnames.titleHasError]: borderColorError,
           ['&:active .' + globalClassnames.titleHasError]: borderColorError,
           ['&:focus .' + globalClassnames.titleHasError]: borderColorError
         }
       },
-      className,
       isOpen && 'is-open',
       disabled && 'is-disabled',
-      required && 'is-required'
+      required && 'is-required',
+      required &&
+        !hasLabel && {
+          selectors: {
+            ':after': {
+              content: `'*'`,
+              color: semanticColors.errorText,
+              position: 'absolute',
+              top: -5,
+              right: -10
+            },
+            [HighContrastSelector]: {
+              selectors: {
+                ':after': {
+                  right: -14 // moving the * 4 pixel to right to alleviate border clipping in HC mode.
+                }
+              }
+            }
+          }
+        }
     ],
     title: [
       globalClassnames.title,
@@ -189,11 +258,12 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: semanticColors.inputBorder,
+        borderRadius: isOpen ? titleOpenBorderRadius : effects.roundedCorner2,
         cursor: 'pointer',
         display: 'block',
         height: DROPDOWN_HEIGHT,
         lineHeight: DROPDOWN_HEIGHT - 2,
-        padding: `0 ${DROPDOWN_HEIGHT}px 0 12px`,
+        padding: `0 28px 0 8px`,
         position: 'relative',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
@@ -214,9 +284,12 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
       {
         position: 'absolute',
         top: 1,
-        right: 12,
+        right: 8,
         height: DROPDOWN_HEIGHT,
         lineHeight: DROPDOWN_HEIGHT - 2 // height minus the border
+      },
+      !disabled && {
+        cursor: 'pointer'
       }
     ],
     caretDown: [
@@ -228,50 +301,21 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
     callout: [
       globalClassnames.callout,
       {
-        boxShadow: '0 0 2px 0 rgba(0,0,0,0.2)',
-        border: `1px solid ${palette.neutralLight}`
+        boxShadow: effects.elevation8,
+        borderRadius: calloutOpenBorderRadius,
+        selectors: {
+          ['.ms-Callout-main']: { borderRadius: calloutOpenBorderRadius }
+        }
       },
       calloutClassName
     ],
-    panel: [
-      globalClassnames.panel,
-      {
-        // #5689: use subcomponentstyles when panel is converted to use js styling.
-        selectors: {
-          '& .ms-Panel-main': {
-            // Force drop shadow even under medium breakpoint
-            boxShadow: '-30px 0px 30px -30px rgba(0,0,0,0.2)'
-          },
-          '& .ms-Panel-contentInner': { padding: '0 0 20px' }
-        }
-      },
-      panelClassName
-    ],
     dropdownItemsWrapper: { selectors: { '&:focus': { outline: 0 } } },
     dropdownItems: [globalClassnames.dropdownItems, { display: 'block' }],
-    dropdownItem: [
-      ...dropdownItemStyle,
-      {
-        selectors: {
-          [HighContrastSelector]: {
-            borderColor: 'Window'
-          },
-          '&:hover': {
-            color: 'inherit'
-          },
-          '&:focus': {
-            backgroundColor: semanticColors.listItemBackgroundHovered
-          },
-          '&:active': {
-            backgroundColor: semanticColors.listHeaderBackgroundHovered,
-            color: palette.black
-          }
-        }
-      }
-    ],
+    dropdownItem: [...dropdownItemStyle, itemSelectors()],
     dropdownItemSelected: dropdownItemSelected,
     dropdownItemDisabled: dropdownItemDisabled,
     dropdownItemSelectedAndDisabled: [dropdownItemSelected, dropdownItemDisabled, { backgroundColor: 'transparent' }],
+    dropdownItemHidden: [...dropdownItemStyle, { display: 'none' }],
     dropdownDivider: [globalClassnames.dropdownDivider, { height: 1, backgroundColor: semanticColors.bodyDivider }],
     dropdownOptionText: [
       globalClassnames.dropdownOptionText,
@@ -295,14 +339,29 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
         background: 'none',
         backgroundColor: 'transparent',
         border: 'none',
-        height: DROPDOWN_ITEMHEIGHT,
-        lineHeight: DROPDOWN_ITEMHEIGHT,
+        height: DROPDOWN_ITEM_HEIGHT,
+        lineHeight: DROPDOWN_ITEM_HEIGHT,
         cursor: 'default',
-        padding: '0px 16px',
+        padding: '0 8px',
         userSelect: 'none',
         textAlign: 'left'
       }
     ],
-    subComponentStyles: { label: { root: { display: 'inline-block' } } }
+    subComponentStyles: {
+      label: { root: { display: 'inline-block' } },
+      panel: {
+        root: [panelClassName],
+        main: {
+          selectors: {
+            // In case of extra small screen sizes
+            [MinimumScreenSelector]: {
+              // panelWidth xs
+              width: 272
+            }
+          }
+        },
+        contentInner: { padding: '0 0 20px' }
+      }
+    }
   };
 };

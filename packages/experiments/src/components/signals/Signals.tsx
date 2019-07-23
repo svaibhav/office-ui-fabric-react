@@ -41,6 +41,10 @@ export const RecordSignal: Signal = (props: ISignalProps): JSX.Element => {
   return <IconSignal {...props} signalClass={SignalsStyles.record} iconName="lock" />;
 };
 
+export const NeedsRepublishingSignal: Signal = (props: ISignalProps): JSX.Element => {
+  return <IconSignal {...props} signalClass={SignalsStyles.needsRepublishing} iconName="readingmode" />;
+};
+
 /**
  * Renders a signal marking the proceeding content as new.
  */
@@ -115,6 +119,14 @@ export const ATPSignal: Signal = MalwareDetectedSignal; // TODO Delete on next m
  */
 export const ExternalSignal: Signal = (props: ISignalProps): JSX.Element => {
   return <IconSignal {...props} signalClass={SignalsStyles.external} iconName="Globe" />;
+};
+
+export const NotFollowedSignal: Signal = (props: ISignalProps): JSX.Element => {
+  return <IconSignal {...props} signalClass={SignalsStyles.bookmarkOutline} iconName="SingleBookmark" />;
+};
+
+export const FollowedSignal: Signal = (props: ISignalProps): JSX.Element => {
+  return <IconSignal {...props} signalClass={SignalsStyles.bookmarkFilled} iconName="SingleBookmarkSolid" />;
 };
 
 type IIconSignalProps = ISignalProps &

@@ -1,19 +1,20 @@
 import * as React from 'react';
-import { ICalloutProps, ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types';
+import { ICalloutProps, ICalloutContentStyleProps, ICalloutContentStyles, Target } from './Callout.types';
 import { DirectionalHint } from '../../common/DirectionalHint';
 import {
-  BaseComponent,
+  Async,
   IPoint,
   IRectangle,
   assign,
+  css,
+  divProperties,
   elementContains,
   focusFirstChild,
-  getWindow,
   getDocument,
-  css,
-  createRef,
   getNativeProps,
-  divProperties
+  getWindow,
+  on,
+  shallowCompare
 } from '../../Utilities';
 import {
   positionCallout,
@@ -34,13 +35,18 @@ const ANIMATIONS: { [key: number]: string | undefined } = {
   [RectangleEdge.right]: AnimationClassNames.slideRightIn10
 };
 
-const getClassNames = classNamesFunction<ICalloutContentStyleProps, ICalloutContentStyles>();
-const BORDER_WIDTH = 1;
+const getClassNames = classNamesFunction<ICalloutContentStyleProps, ICalloutContentStyles>({
+  disableCaching: true
+});
 const BEAK_ORIGIN_POSITION = { top: 0, left: 0 };
 // Microsoft Edge will overwrite inline styles if there is an animation pertaining to that style.
 // To help ensure that edge will respect the offscreen style opacity
 // filter needs to be added as an additional way to set opacity.
 const OFF_SCREEN_STYLE = { opacity: 0, filter: 'opacity(0)' };
+// role and role description go hand-in-hand. Both would be included by spreading getNativeProps for a basic element
+// This constant array can be used to filter these out of native props spread on callout root and apply them together on
+// calloutMain (the Popup component within the callout)
+const ARIA_ROLE_ATTRIBUTES = ['role', 'aria-roledescription'];
 
 export interface ICalloutState {
   positions?: ICalloutPositionedInfo;
@@ -49,10 +55,11 @@ export interface ICalloutState {
   heightOffset?: number;
 }
 
-export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutState> {
+export class CalloutContentBase extends React.Component<ICalloutProps, ICalloutState> {
   public static defaultProps = {
     preventDismissOnLostFocus: false,
     preventDismissOnScroll: false,
+    preventDismissOnResize: false,
     isBeakVisible: true,
     beakWidth: 16,
     gapSpace: 0,
@@ -62,19 +69,25 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
 
   private _classNames: { [key in keyof ICalloutContentStyles]: string };
   private _didSetInitialFocus: boolean;
-  private _hostElement = createRef<HTMLDivElement>();
-  private _calloutElement = createRef<HTMLDivElement>();
+  private _hostElement = React.createRef<HTMLDivElement>();
+  private _calloutElement = React.createRef<HTMLDivElement>();
   private _targetWindow: Window;
-  private _bounds: IRectangle;
+  private _bounds: IRectangle | undefined;
   private _positionAttempts: number;
   private _target: Element | MouseEvent | IPoint | null;
   private _setHeightOffsetTimer: number;
   private _hasListeners = false;
   private _maxHeight: number | undefined;
+  private _blockResetHeight: boolean;
+  private _isMouseDownOnPopup: boolean;
+
+  private _async: Async;
+  private _disposables: (() => void)[] = [];
 
   constructor(props: ICalloutProps) {
     super(props);
 
+    this._async = new Async(this);
     this._didSetInitialFocus = false;
     this.state = {
       positions: undefined,
@@ -87,8 +100,8 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
   }
 
   public componentDidUpdate() {
-    this._setInitialFocus();
     if (!this.props.hidden) {
+      this._setInitialFocus();
       if (!this._hasListeners) {
         this._addListeners();
       }
@@ -100,8 +113,22 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     }
   }
 
+  public shouldComponentUpdate(newProps: ICalloutProps, newState: ICalloutState): boolean {
+    if (this.props.hidden && newProps.hidden) {
+      // Do not update when hidden.
+      return false;
+    }
+
+    return !shallowCompare(this.props, newProps) || !shallowCompare(this.state, newState);
+  }
+
   public componentWillMount() {
     this._setTargetWindowAndElement(this._getTarget());
+  }
+
+  public componentWillUnmount() {
+    this._async.dispose();
+    this._disposables.forEach((dispose: () => void) => dispose());
   }
 
   public componentWillUpdate(newProps: ICalloutProps): void {
@@ -109,7 +136,7 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     // do not know if fabric has rendered a new element and disposed the old element.
     const newTarget = this._getTarget(newProps);
     const oldTarget = this._getTarget();
-    if (newTarget !== oldTarget || typeof newTarget === 'string' || newTarget instanceof String) {
+    if ((newTarget !== oldTarget || typeof newTarget === 'string' || newTarget instanceof String) && !this._blockResetHeight) {
       this._maxHeight = undefined;
       this._setTargetWindowAndElement(newTarget!);
     }
@@ -121,12 +148,19 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
       this._setHeightOffsetEveryFrame();
     }
 
-    // if the callout becomes hidden, then remove any positions that were placed on it.
-    if (newProps.hidden && newProps.hidden !== this.props.hidden) {
+    // Ensure positioning is recalculated when we are about to show a persisted menu.
+    if (!newProps.hidden && newProps.hidden !== this.props.hidden) {
+      this._maxHeight = undefined;
+      // Target might have been updated while hidden.
+      this._setTargetWindowAndElement(newTarget);
       this.setState({
         positions: undefined
       });
+      this._didSetInitialFocus = false;
+      this._bounds = undefined;
     }
+
+    this._blockResetHeight = false;
   }
 
   public componentDidMount(): void {
@@ -144,7 +178,6 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     const {
       styles,
       style,
-      role,
       ariaLabel,
       ariaDescribedBy,
       ariaLabelledBy,
@@ -158,7 +191,8 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
       hideOverflow = !!finalHeight,
       backgroundColor,
       calloutMaxHeight,
-      onScroll
+      onScroll,
+      shouldRestoreFocus = true
     } = this.props;
     target = this._getTarget();
     const { positions } = this.state;
@@ -191,7 +225,7 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     const content = (
       <div ref={this._hostElement} className={this._classNames.container} style={visibilityStyle}>
         <div
-          {...getNativeProps(this.props, divProperties)}
+          {...getNativeProps(this.props, divProperties, ARIA_ROLE_ATTRIBUTES)}
           className={css(this._classNames.root, positions && positions.targetEdge && ANIMATIONS[positions.targetEdge!])}
           style={positions ? positions.elementPosition : OFF_SCREEN_STYLE}
           tabIndex={-1} // Safari and Firefox on Mac OS requires this to back-stop click events so focus remains in the Callout.
@@ -200,21 +234,21 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
         >
           {beakVisible && <div className={this._classNames.beak} style={this._getBeakPosition()} />}
           {beakVisible && <div className={this._classNames.beakCurtain} />}
-          {!this.props.hidden && (
-            <Popup
-              role={role}
-              ariaLabel={ariaLabel}
-              ariaDescribedBy={ariaDescribedBy}
-              ariaLabelledBy={ariaLabelledBy}
-              className={this._classNames.calloutMain}
-              onDismiss={this.dismiss}
-              onScroll={onScroll}
-              shouldRestoreFocus={true}
-              style={overflowStyle}
-            >
-              {children}
-            </Popup>
-          )}
+          <Popup
+            {...getNativeProps(this.props, ARIA_ROLE_ATTRIBUTES)}
+            ariaLabel={ariaLabel}
+            ariaDescribedBy={ariaDescribedBy}
+            ariaLabelledBy={ariaLabelledBy}
+            className={this._classNames.calloutMain}
+            onDismiss={this.dismiss}
+            onScroll={onScroll}
+            shouldRestoreFocus={shouldRestoreFocus}
+            style={overflowStyle}
+            onMouseDown={this._mouseDownOnPopup}
+            onMouseUp={this._mouseUpOnPopup}
+          >
+            {children}
+          </Popup>
         </div>
       </div>
     );
@@ -230,29 +264,26 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     }
   };
 
-  protected _dismissOnScroll(ev: Event) {
+  protected _dismissOnScroll = (ev: Event) => {
     const { preventDismissOnScroll } = this.props;
     if (this.state.positions && !preventDismissOnScroll) {
-      this._dismissOnLostFocus(ev);
+      this._dismissOnClickOrScroll(ev);
     }
-  }
+  };
 
-  protected _dismissOnLostFocus(ev: Event) {
-    const target = ev.target as HTMLElement;
-    const clickedOutsideCallout = this._hostElement.current && !elementContains(this._hostElement.current, target);
-    const { preventDismissOnLostFocus } = this.props;
-
-    if (
-      !preventDismissOnLostFocus &&
-      ((!this._target && clickedOutsideCallout) ||
-        (ev.target !== this._targetWindow &&
-          clickedOutsideCallout &&
-          ((this._target as MouseEvent).stopPropagation ||
-            (!this._target || (target !== this._target && !elementContains(this._target as HTMLElement, target))))))
-    ) {
+  protected _dismissOnResize = (ev: Event) => {
+    const { preventDismissOnResize } = this.props;
+    if (!preventDismissOnResize) {
       this.dismiss(ev);
     }
-  }
+  };
+
+  protected _dismissOnLostFocus = (ev: Event) => {
+    const { preventDismissOnLostFocus } = this.props;
+    if (!preventDismissOnLostFocus) {
+      this._dismissOnClickOrScroll(ev);
+    }
+  };
 
   protected _setInitialFocus = (): void => {
     if (this.props.setInitialFocus && !this._didSetInitialFocus && this.state.positions && this._calloutElement.current) {
@@ -272,25 +303,46 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     this._setHeightOffsetEveryFrame();
   };
 
+  private _dismissOnClickOrScroll(ev: Event) {
+    const target = ev.target as HTMLElement;
+    const isEventTargetOutsideCallout = this._hostElement.current && !elementContains(this._hostElement.current, target);
+
+    // If mouse is pressed down on callout but moved outside then released, don't dismiss the callout.
+    if (isEventTargetOutsideCallout && this._isMouseDownOnPopup) {
+      this._isMouseDownOnPopup = false;
+      return;
+    }
+
+    if (
+      (!this._target && isEventTargetOutsideCallout) ||
+      (ev.target !== this._targetWindow &&
+        isEventTargetOutsideCallout &&
+        ((this._target as MouseEvent).stopPropagation ||
+          (!this._target || (target !== this._target && !elementContains(this._target as HTMLElement, target)))))
+    ) {
+      this.dismiss(ev);
+    }
+  }
+
   private _addListeners() {
     // This is added so the callout will dismiss when the window is scrolled
     // but not when something inside the callout is scrolled. The delay seems
     // to be required to avoid React firing an async focus event in IE from
     // the target changing focus quickly prior to rendering the callout.
     this._async.setTimeout(() => {
-      this._events.on(this._targetWindow, 'scroll', this._dismissOnScroll, true);
-      this._events.on(this._targetWindow, 'resize', this.dismiss, true);
-      this._events.on(this._targetWindow.document.documentElement, 'focus', this._dismissOnLostFocus, true);
-      this._events.on(this._targetWindow.document.documentElement, 'click', this._dismissOnLostFocus, true);
+      this._disposables.push(
+        on(this._targetWindow, 'scroll', this._dismissOnScroll, true),
+        on(this._targetWindow, 'resize', this._dismissOnResize, true),
+        on(this._targetWindow.document.documentElement, 'focus', this._dismissOnLostFocus, true),
+        on(this._targetWindow.document.documentElement, 'click', this._dismissOnLostFocus, true)
+      );
       this._hasListeners = true;
     }, 0);
   }
 
   private _removeListeners() {
-    this._events.off(this._targetWindow, 'scroll', this._dismissOnScroll, true);
-    this._events.off(this._targetWindow, 'resize', this.dismiss, true);
-    this._events.off(this._targetWindow.document.documentElement, 'focus', this._dismissOnLostFocus, true);
-    this._events.off(this._targetWindow.document.documentElement, 'click', this._dismissOnLostFocus, true);
+    this._disposables.forEach((dispose: () => void) => dispose());
+    this._disposables = [];
     this._hasListeners = false;
   }
 
@@ -343,7 +395,8 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
         this.setState({
           positions: newPositions
         });
-      } else {
+      } else if (this._positionAttempts > 0) {
+        // Only call the onPositioned callback if the callout has been re-positioned at least once.
         this._positionAttempts = 0;
         if (this.props.onPositioned) {
           this.props.onPositioned(this.state.positions);
@@ -380,15 +433,16 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
         const gapSpace = this.props.gapSpace ? this.props.gapSpace : 0;
         // Since the callout cannot measure it's border size it must be taken into account here. Otherwise it will
         // overlap with the target.
-        const totalGap = gapSpace + beakWidth! + BORDER_WIDTH * 2;
+        const totalGap = gapSpace + beakWidth!;
         this._async.requestAnimationFrame(() => {
           if (this._target) {
             this._maxHeight = getMaxHeight(this._target, this.props.directionalHint!, totalGap, this._getBounds(), this.props.coverTarget);
+            this._blockResetHeight = true;
             this.forceUpdate();
           }
         });
       } else {
-        this._maxHeight = this._getBounds().height! - BORDER_WIDTH * 2;
+        this._maxHeight = this._getBounds().height!;
       }
     }
     return this._maxHeight!;
@@ -420,7 +474,7 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     return true;
   }
 
-  private _setTargetWindowAndElement(target: Element | string | MouseEvent | IPoint | null): void {
+  private _setTargetWindowAndElement(target: Target): void {
     if (target) {
       if (typeof target === 'string') {
         const currentDoc: Document = getDocument()!;
@@ -428,15 +482,18 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
         this._targetWindow = getWindow()!;
       } else if ((target as MouseEvent).stopPropagation) {
         this._targetWindow = getWindow((target as MouseEvent).toElement as HTMLElement)!;
-        this._target = target;
+        this._target = target as MouseEvent;
       } else if ((target as Element).getBoundingClientRect) {
         const targetElement: Element = target as Element;
         this._targetWindow = getWindow(targetElement)!;
-        this._target = target;
+        this._target = target as Element;
+      } else if ((target as React.RefObject<Element>).current !== undefined) {
+        this._target = (target as React.RefObject<Element>).current;
+        this._targetWindow = getWindow(this._target)!;
         // HTMLImgElements can have x and y values. The check for it being a point must go last.
       } else {
         this._targetWindow = getWindow()!;
-        this._target = target;
+        this._target = target as IPoint;
       }
     } else {
       this._targetWindow = getWindow()!;
@@ -469,8 +526,16 @@ export class CalloutContentBase extends BaseComponent<ICalloutProps, ICalloutSta
     }
   }
 
-  private _getTarget(props: ICalloutProps = this.props): Element | string | MouseEvent | IPoint | null {
+  private _getTarget(props: ICalloutProps = this.props): Target {
     const { target } = props;
     return target!;
   }
+
+  private _mouseDownOnPopup = () => {
+    this._isMouseDownOnPopup = true;
+  };
+
+  private _mouseUpOnPopup = () => {
+    this._isMouseDownOnPopup = false;
+  };
 }

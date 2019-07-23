@@ -11,7 +11,7 @@ const GlobalClassNames = {
 
 export const styles = (props: IDatePickerStyleProps): IDatePickerStyles => {
   const { className, theme, disabled, label, isDatePickerShown } = props;
-  const { palette } = theme;
+  const { palette, semanticColors, effects } = theme;
   const classNames = getGlobalClassNames(GlobalClassNames, theme);
 
   const DatePickerEvent: IStyle = {
@@ -24,7 +24,7 @@ export const styles = (props: IDatePickerStyleProps): IDatePickerStyles => {
   };
 
   return {
-    root: [classNames.root, isDatePickerShown && 'is-open', normalize, className],
+    root: [classNames.root, theme.fonts.medium, isDatePickerShown && 'is-open', normalize, className],
     textField: [
       {
         position: 'relative',
@@ -40,9 +40,16 @@ export const styles = (props: IDatePickerStyleProps): IDatePickerStyles => {
             }
           }
         }
+      },
+      disabled && {
+        selectors: {
+          '& input[readonly]': {
+            cursor: 'default'
+          }
+        }
       }
     ],
-    callout: [classNames.callout],
+    callout: [classNames.callout, { boxShadow: effects.elevation8 }],
     icon: [
       DatePickerEvent,
       !label && [classNames.withoutLabel, { top: '7px' }],
@@ -53,7 +60,11 @@ export const styles = (props: IDatePickerStyleProps): IDatePickerStyles => {
           pointerEvents: 'initial',
           cursor: 'pointer'
         }
-      ]
+      ],
+      disabled && {
+        color: semanticColors.disabledText,
+        cursor: 'default'
+      }
     ]
   };
 };

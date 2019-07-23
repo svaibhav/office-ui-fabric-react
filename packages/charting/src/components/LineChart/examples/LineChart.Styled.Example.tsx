@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { LineChart, ILineChartProps } from '@uifabric/charting/lib/LineChart';
-import { IChartProps, ILineChartPoints } from '@uifabric/charting';
+import { IChartProps, ILineChartPoints, ILineChartProps, LineChart } from '@uifabric/charting';
 import { DefaultPalette } from 'office-ui-fabric-react/lib/Styling';
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 
@@ -9,7 +8,7 @@ interface IRootStyles {
   width: string;
 }
 
-export class LineChartStyledExample extends React.Component<ILineChartProps, {}> {
+export class LineChartStyledExample extends React.Component<{}, {}> {
   constructor(props: ILineChartProps) {
     super(props);
   }
@@ -22,16 +21,12 @@ export class LineChartStyledExample extends React.Component<ILineChartProps, {}>
     const points: ILineChartPoints[] = [
       {
         data: [
-          { x: 'One', y: 5 },
-          { x: 'Two', y: 10 },
-          { x: 'Three', y: 5 },
-          { x: 'Four', y: 20 },
-          { x: 'Five', y: 18 },
-          { x: 'Six', y: 5 },
-          { x: 'Seven', y: 10 },
-          { x: 'Eight', y: 5 },
-          { x: 'Nine', y: 20 },
-          { x: 'Ten', y: 18 }
+          { x: new Date('2018/01/06'), y: 10 },
+          { x: new Date('2018/01/16'), y: 18 },
+          { x: new Date('2018/01/20'), y: 24 },
+          { x: new Date('2018/01/24'), y: 35 },
+          { x: new Date('2018/01/26'), y: 35 },
+          { x: new Date('2018/01/29'), y: 38 }
         ],
         legend: 'Week',
         color: DefaultPalette.blue

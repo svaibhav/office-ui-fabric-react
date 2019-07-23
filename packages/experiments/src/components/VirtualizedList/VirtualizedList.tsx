@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IVirtualizedListProps } from './VirtualizedList.types';
 import { IScrollContainerContext, ScrollContainerContextTypes } from '../../utilities/scrolling/ScrollContainer';
 import { IObjectWithKey } from 'office-ui-fabric-react/lib/Selection';
-import { BaseComponent, getParent, css, createRef } from 'office-ui-fabric-react/lib/Utilities';
+import { BaseComponent, getParent, css } from 'office-ui-fabric-react/lib/Utilities';
 
 interface IRange {
   /** Start of range */
@@ -22,14 +22,11 @@ export interface IVirtualizedListState {
   items: React.ReactNode[];
 }
 
-export class VirtualizedList<TItem extends IObjectWithKey> extends BaseComponent<
-  IVirtualizedListProps<TItem>,
-  IVirtualizedListState
-> {
+export class VirtualizedList<TItem extends IObjectWithKey> extends BaseComponent<IVirtualizedListProps<TItem>, IVirtualizedListState> {
   public static contextTypes: typeof ScrollContainerContextTypes = ScrollContainerContextTypes;
   public context: IScrollContainerContext;
 
-  private _root = createRef<HTMLDivElement>();
+  private _root = React.createRef<HTMLDivElement>();
 
   private _spacerElements: { [key: string]: HTMLElement } = {};
 
@@ -51,22 +48,19 @@ export class VirtualizedList<TItem extends IObjectWithKey> extends BaseComponent
   }
 
   public componentDidMount(): void {
-    this._events.on(this._root, 'focus', this._onFocus, true);
+    if (this._root.current) {
+      this._events.on(this._root.current, 'focus', this._onFocus, true);
+    }
 
     this.context.scrollContainer.registerVisibleCallback((scrollTop: number) => {
       this._render(scrollTop);
     });
 
-    this.componentDidUpdate();
+    this._updateObservedElements();
   }
 
   public componentDidUpdate(): void {
-    // (Re-)register with the observer after every update, this way we'll get an intersection event immediately if one of the spacer
-    // elements is visible right now.
-    for (const key of Object.keys(this._spacerElements)) {
-      const ref = this._spacerElements[key];
-      this.context.scrollContainer.observe(ref);
-    }
+    this._updateObservedElements();
   }
 
   public componentWillUpdate(): void {
@@ -85,6 +79,15 @@ export class VirtualizedList<TItem extends IObjectWithKey> extends BaseComponent
         {items}
       </div>
     );
+  }
+
+  private _updateObservedElements(): void {
+    // (Re-)register with the observer after every update, so we'll get an intersection event immediately if one of the spacer
+    // elements is visible right now.
+    for (const key of Object.keys(this._spacerElements)) {
+      const ref = this._spacerElements[key];
+      this.context.scrollContainer.observe(ref);
+    }
   }
 
   private _renderItems(scrollTop: number, viewportHeight: number): (JSX.Element | null)[] {
@@ -173,7 +176,7 @@ export class VirtualizedList<TItem extends IObjectWithKey> extends BaseComponent
     }
 
     // tslint:disable-next-line:jsx-ban-props
-    return <ItemTag ref={this._spacerRef.bind(this, key)} key={key} style={{ height: spacerHeight }} />;
+    return React.createElement(ItemTag, { ref: this._spacerRef.bind(this, key), key, style: { height: spacerHeight } });
   }
 
   private _spacerRef = (key: string, ref: HTMLElement): void => {

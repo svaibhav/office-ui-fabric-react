@@ -1,184 +1,194 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
-<div>
-  <div>
-    <button
-      aria-checked={true}
+<div
+  className=
+      ms-Stack
+      {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        height: auto;
+        width: auto;
+      }
+      & > * {
+        text-overflow: ellipsis;
+      }
+      & > *:not(:first-child) {
+        margin-top: 10px;
+      }
+      & > *:not(.ms-StackItem) {
+        flex-shrink: 1;
+      }
+>
+  <div
+    className=
+        ms-Checkbox
+        is-checked
+        is-enabled
+        {
+          display: flex;
+          position: relative;
+        }
+        &:hover .ms-Checkbox-checkbox {
+          background: #005a9e;
+          border-color: #005a9e;
+        }
+        &:focus .ms-Checkbox-checkbox {
+          background: #005a9e;
+          border-color: #005a9e;
+        }
+        @media screen and (-ms-high-contrast: active){&:hover .ms-Checkbox-checkbox {
+          background: Window;
+          border-color: Highlight;
+        }
+        @media screen and (-ms-high-contrast: active){&:focus .ms-Checkbox-checkbox {
+          background: Highlight;
+        }
+        @media screen and (-ms-high-contrast: active){&:focus:hover .ms-Checkbox-checkbox {
+          background: Highlight;
+        }
+        @media screen and (-ms-high-contrast: active){&:focus:hover .ms-Checkbox-checkmark {
+          color: Window;
+        }
+        @media screen and (-ms-high-contrast: active){&:hover .ms-Checkbox-checkmark {
+          color: Highlight;
+        }
+        &:hover .ms-Checkbox-text {
+          color: #201f1e;
+        }
+        &:focus .ms-Checkbox-text {
+          color: #201f1e;
+        }
+  >
+    <input
       checked={true}
       className=
-          ms-Checkbox
-          is-checked
-          is-enabled
+
           {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
             background: none;
-            border: none;
-            cursor: pointer;
-            display: block;
-            font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-            margin-bottom: 0;
-            margin-left: 0;
-            margin-right: 0;
-            margin-top: 0;
-            outline: none;
-            padding-bottom: 0;
-            padding-left: 0;
-            padding-right: 0;
-            padding-top: 0;
-            position: relative;
-          }
-          &::-moz-focus-inner {
-            border: 0;
-          }
-          .ms-Fabric--isFocusVisible &:focus:after {
-            border: 1px solid #ffffff;
-            bottom: -2px;
-            content: "";
-            left: -2px;
-            outline: 1px solid #666666;
+            opacity: 0;
             position: absolute;
-            right: -2px;
-            top: -2px;
-            z-index: 1;
           }
-          &:hover .ms-Checkbox-checkbox {
-            background: #106ebe;
-            border-color: #106ebe;
+          .ms-Fabric--isFocusVisible &:focus + label::before {
+            outline-offset: 2px;
+            outline: 1px solid #605e5c;
           }
-          &:focus .ms-Checkbox-checkbox {
-            background: #106ebe;
-            border-color: #106ebe;
-          }
-          @media screen and (-ms-high-contrast: active){&:hover .ms-Checkbox-checkbox {
-            background: Window;
-            border-color: Highlight;
-          }
-          @media screen and (-ms-high-contrast: active){&:focus .ms-Checkbox-checkbox {
-            background: Highlight;
-          }
-          @media screen and (-ms-high-contrast: active){&:focus:hover .ms-Checkbox-checkbox {
-            background: Highlight;
-          }
-          @media screen and (-ms-high-contrast: active){&:focus:hover .ms-Checkbox-checkmark {
-            color: Window;
-          }
-          @media screen and (-ms-high-contrast: active){&:hover .ms-Checkbox-checkmark {
-            color: Highlight;
-          }
-          &:hover .ms-Checkbox-text {
-            color: #333333;
-          }
-          &:focus .ms-Checkbox-text {
-            color: #333333;
+          @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus + label::before {
+            outline: 1px solid ActiveBorder;
           }
       id="checkbox-0"
       onBlur={[Function]}
-      onClick={[Function]}
+      onChange={[Function]}
       onFocus={[Function]}
-      role="checkbox"
-      type="button"
+      type="checkbox"
+    />
+    <label
+      className=
+          ms-Checkbox-label
+          {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            align-items: flex-start;
+            cursor: pointer;
+            display: flex;
+            font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            position: relative;
+            text-align: left;
+            user-select: none;
+          }
+          &::before {
+            bottom: 0px;
+            content: "";
+            left: 0px;
+            pointer-events: none;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+          }
+      htmlFor="checkbox-0"
     >
-      <label
+      <div
         className=
-            ms-Checkbox-label
+            ms-Checkbox-checkbox
             {
-              align-items: flex-start;
-              cursor: pointer;
+              align-items: center;
+              background: #0078d4;
+              border-color: #0078d4;
+              border-radius: 2px;
+              border: 1px solid #323130;
+              box-sizing: border-box;
               display: flex;
-              margin-bottom: 0;
-              margin-left: -4px;
-              margin-right: -4px;
-              margin-top: 0;
-              position: relative;
-              text-align: left;
-              user-select: none;
+              flex-shrink: 0;
+              height: 20px;
+              justify-content: center;
+              margin-right: 4px;
+              overflow: hidden;
+              transition-duration: 200ms;
+              transition-property: background, border, border-color;
+              transition-timing-function: cubic-bezier(.4, 0, .23, 1);
+              width: 20px;
             }
-        htmlFor="checkbox-0"
+            @media screen and (-ms-high-contrast: active){& {
+              background: Highlight;
+              border-color: Highlight;
+            }
       >
-        <div
+        <i
+          aria-hidden={true}
           className=
-              ms-Checkbox-checkbox
+              ms-Checkbox-checkmark
               {
-                align-items: center;
-                background: #0078d4;
-                border-color: #0078d4;
-                border-style: solid;
-                border-width: 1px;
-                box-sizing: border-box;
-                display: flex;
-                flex-shrink: 0;
-                height: 20px;
-                justify-content: center;
-                margin-bottom: 0;
-                margin-left: 4px;
-                margin-right: 4px;
-                margin-top: 0;
-                overflow: hidden;
-                transition-duration: 200ms;
-                transition-property: background, border, border-color;
-                transition-timing-function: cubic-bezier(.4, 0, .23, 1);
-                width: 20px;
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
+                color: #ffffff;
+                display: inline-block;
+                font-family: "FabricMDL2Icons";
+                font-style: normal;
+                font-weight: normal;
+                opacity: 1;
+                speak: none;
               }
               @media screen and (-ms-high-contrast: active){& {
-                background: Highlight;
-                border-color: Highlight;
+                -ms-high-contrast-adjust: none;
+                color: Window;
               }
+          data-icon-name="CheckMark"
+          role="presentation"
         >
-          <i
-            aria-hidden={true}
-            className=
-                ms-Checkbox-checkmark
-                {
-                  -moz-osx-font-smoothing: grayscale;
-                  -webkit-font-smoothing: antialiased;
-                  color: #ffffff;
-                  display: inline-block;
-                  font-family: "FabricMDL2Icons";
-                  font-style: normal;
-                  font-weight: normal;
-                  opacity: 1;
-                  speak: none;
-                }
-                @media screen and (-ms-high-contrast: active){& {
-                  -ms-high-contrast-adjust: none;
-                  color: Window;
-                }
-            data-icon-name="CheckMark"
-            role="presentation"
-          >
-            
-          </i>
-        </div>
-        <span
-          className=
-              ms-Checkbox-text
-              {
-                color: #333333;
-                font-size: 14px;
-                line-height: 20px;
-                margin-bottom: 0;
-                margin-left: 4px;
-                margin-right: 4px;
-                margin-top: 0;
-              }
-        >
-          Include persona details
-        </span>
-      </label>
-    </button>
+          
+        </i>
+      </div>
+      <span
+        className=
+            ms-Checkbox-text
+            {
+              color: #323130;
+              font-size: 14px;
+              line-height: 20px;
+              margin-left: 4px;
+            }
+      >
+        Include persona details
+      </span>
+    </label>
   </div>
   <label
     className=
         ms-Label
         {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -191,19 +201,19 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           word-wrap: break-word;
         }
   >
-    Size 10 Persona, with no presence
+    Size 8 Persona, with no presence
   </label>
   <div
     className=
         ms-Persona
-        ms-Persona--size10
+        ms-Persona--size8
         {
           -moz-osx-font-smoothing: grayscale;
           -webkit-font-smoothing: antialiased;
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -224,14 +234,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={9}
   >
     <div
       className=
           ms-Persona-coin
-          ms-Persona--size10
+          ms-Persona--size8
           {
             -moz-osx-font-smoothing: grayscale;
             -webkit-font-smoothing: antialiased;
@@ -239,7 +248,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={9}
     >
       <i
         aria-hidden={true}
@@ -285,7 +293,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
+              color: #323130;
               font-size: 12px;
               font-weight: 400;
               line-height: 20px;
@@ -293,11 +301,17 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -308,7 +322,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
               font-size: 12px;
               font-weight: 400;
@@ -316,11 +330,17 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -331,19 +351,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -354,19 +380,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -379,10 +411,15 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
     className=
         ms-Label
         {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -395,12 +432,12 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           word-wrap: break-word;
         }
   >
-    Size 10 Persona, with presence
+    Size 8 Persona, with presence
   </label>
   <div
     className=
         ms-Persona
-        ms-Persona--size10
+        ms-Persona--size8
         ms-Persona--offline
         {
           -moz-osx-font-smoothing: grayscale;
@@ -408,7 +445,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -429,14 +466,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={9}
   >
     <div
       className=
           ms-Persona-coin
-          ms-Persona--size10
+          ms-Persona--size8
           {
             -moz-osx-font-smoothing: grayscale;
             -webkit-font-smoothing: antialiased;
@@ -444,7 +480,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={9}
     >
       <div
         className=
@@ -452,7 +487,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             {
               -ms-high-contrast-adjust: none;
               background-clip: content-box;
-              background-color: #93ABBD;
+              background-color: #ffffff;
               border-radius: 50%;
               border: 0px;
               bottom: -2px;
@@ -470,6 +505,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               border-color: Window;
               border: 1px solid WindowText;
               top: 9px;
+            }
+            &:before {
+              border-radius: 50%;
+              border: 1px solid #8A8886;
+              box-sizing: border-box;
+              content: "";
+              height: 100%;
+              left: 0px;
+              position: absolute;
+              top: 0px;
+              width: 100%;
+            }
+            @media screen and (-ms-high-contrast: active){&:before {
+              border-color: Window;
+              height: calc(100% - 2px);
+              left: 1px;
+              top: 1px;
+              width: calc(100% - 2px);
             }
       />
     </div>
@@ -493,7 +546,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
+              color: #323130;
               font-size: 12px;
               font-weight: 400;
               line-height: 20px;
@@ -501,11 +554,17 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -516,7 +575,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
               font-size: 12px;
               font-weight: 400;
@@ -524,11 +583,17 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -539,19 +604,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -562,19 +633,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -587,10 +664,15 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
     className=
         ms-Label
         {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -616,7 +698,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -637,9 +719,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={10}
   >
     <div
       className=
@@ -652,7 +733,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={10}
     >
       <div
         className=
@@ -670,8 +750,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               ms-Image
               ms-Persona-image
               {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
                 border-radius: 50%;
                 border: 0px;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 400;
                 height: 24px;
                 left: 0px;
                 margin-right: 10px;
@@ -698,8 +783,9 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 is-fadeIn
                 {
                   display: block;
-                  height: auto;
+                  height: 100%;
                   left: 50% /* @noflip */;
+                  object-fit: cover;
                   opacity: 0;
                   position: absolute;
                   top: 50%;
@@ -717,7 +803,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               {
                 -ms-high-contrast-adjust: none;
                 background-clip: content-box;
-                background-color: #7FBA00;
+                background-color: #6BB700;
                 border-radius: 50%;
                 border: 2px solid #ffffff;
                 bottom: -2px;
@@ -745,8 +831,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             justify-content: space-around;
             min-width: 0px;
             padding-bottom: 0;
-            padding-left: 12px;
-            padding-right: 12px;
+            padding-left: 8px;
+            padding-right: 8px;
             padding-top: 0;
             text-align: left;
             width: 100%;
@@ -756,18 +842,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
+              color: #323130;
               font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -778,7 +870,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
               font-size: 12px;
               font-weight: 400;
@@ -786,11 +878,17 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -801,19 +899,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -824,19 +928,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -848,273 +958,16 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
   <label
     className=
         ms-Label
-        {
-          box-shadow: none;
-          box-sizing: border-box;
-          color: #333333;
-          display: block;
-          margin-bottom: 0px;
-          margin-left: 0px;
-          margin-right: 0px;
-          margin-top: 0px;
-          overflow-wrap: break-word;
-          padding-bottom: 5px;
-          padding-left: 0;
-          padding-right: 0;
-          padding-top: 5px;
-          word-wrap: break-word;
-        }
-  >
-    Size 28 Persona
-  </label>
-  <div
-    className=
-        ms-Persona
-        ms-Persona--size28
-        ms-Persona--online
         {
           -moz-osx-font-smoothing: grayscale;
           -webkit-font-smoothing: antialiased;
-          align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
-          display: flex;
+          color: #323130;
+          display: block;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
-          font-weight: 400;
-          height: 28px;
-          margin-bottom: 0px;
-          margin-left: 0px;
-          margin-right: 0px;
-          margin-top: 0px;
-          min-width: 28px;
-          padding-bottom: 0px;
-          padding-left: 0px;
-          padding-right: 0px;
-          padding-top: 0px;
-          position: relative;
-        }
-        & .contextualHost {
-          display: none;
-        }
-        &:hover $primaryText {
-          color: #212121;
-        }
-    size={7}
-  >
-    <div
-      className=
-          ms-Persona-coin
-          ms-Persona--size28
-          {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
-            font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-          }
-      size={7}
-    >
-      <div
-        className=
-            ms-Persona-imageArea
-            {
-              flex: 0 0 auto;
-              height: 28px;
-              position: relative;
-              text-align: center;
-              width: 28px;
-            }
-      >
-        <div
-          className=
-              ms-Image
-              ms-Persona-image
-              {
-                border-radius: 50%;
-                border: 0px;
-                height: 28px;
-                left: 0px;
-                margin-right: 10px;
-                overflow: hidden;
-                perspective: 1px;
-                position: absolute;
-                top: 0px;
-                width: 28px;
-              }
-          style={
-            Object {
-              "height": 28,
-              "width": 28,
-            }
-          }
-        >
-          <img
-            alt=""
-            className=
-                ms-Image-image
-                ms-Image-image--cover
-                ms-Image-image--portrait
-                is-notLoaded
-                is-fadeIn
-                {
-                  display: block;
-                  height: auto;
-                  left: 50% /* @noflip */;
-                  opacity: 0;
-                  position: absolute;
-                  top: 50%;
-                  transform: translate(-50%,-50%);
-                  width: 100%;
-                }
-            onError={[Function]}
-            onLoad={[Function]}
-            src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png"
-          />
-        </div>
-        <div
-          className=
-              ms-Persona-presence
-              {
-                -ms-high-contrast-adjust: none;
-                background-clip: content-box;
-                background-color: #7FBA00;
-                border-radius: 50%;
-                border: 2px solid #ffffff;
-                bottom: -2px;
-                box-sizing: content-box;
-                height: 8px;
-                position: absolute;
-                right: -2px;
-                text-align: center;
-                top: auto;
-                width: 8px;
-              }
-              @media screen and (-ms-high-contrast: active){& {
-                background-color: Highlight;
-                border-color: Window;
-              }
-        />
-      </div>
-    </div>
-    <div
-      className=
-          ms-Persona-details
-          {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            min-width: 0px;
-            padding-bottom: 0;
-            padding-left: 12px;
-            padding-right: 12px;
-            padding-top: 0;
-            text-align: left;
-            width: 100%;
-          }
-    >
-      <div
-        className=
-            ms-Persona-primaryText
-            {
-              color: #333333;
-              font-size: 14px;
-              font-weight: 400;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-      >
-        <div
-          className="ms-TooltipHost"
-          onBlurCapture={[Function]}
-          onFocusCapture={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-        >
-          Annie Lindqvist
-        </div>
-      </div>
-      <div
-        className=
-            ms-Persona-secondaryText
-            {
-              color: #666666;
-              display: none;
-              font-size: 12px;
-              font-weight: 400;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-      >
-        <div
-          className="ms-TooltipHost"
-          onBlurCapture={[Function]}
-          onFocusCapture={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-        >
-          Software Engineer
-        </div>
-      </div>
-      <div
-        className=
-            ms-Persona-tertiaryText
-            {
-              color: #666666;
-              display: none;
-              font-size: 12px;
-              font-weight: 400;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-      >
-        <div
-          className="ms-TooltipHost"
-          onBlurCapture={[Function]}
-          onFocusCapture={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-        >
-          In a meeting
-        </div>
-      </div>
-      <div
-        className=
-            ms-Persona-optionalText
-            {
-              color: #666666;
-              display: none;
-              font-size: 12px;
-              font-weight: 400;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-      >
-        <div
-          className="ms-TooltipHost"
-          onBlurCapture={[Function]}
-          onFocusCapture={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-        >
-          Available at 4:00pm
-        </div>
-      </div>
-    </div>
-  </div>
-  <label
-    className=
-        ms-Label
-        {
-          box-shadow: none;
-          box-sizing: border-box;
-          color: #333333;
-          display: block;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -1140,7 +993,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -1161,9 +1014,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={11}
   >
     <div
       className=
@@ -1176,7 +1028,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={11}
     >
       <div
         className=
@@ -1194,8 +1045,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               ms-Image
               ms-Persona-image
               {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
                 border-radius: 50%;
                 border: 0px;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 400;
                 height: 32px;
                 left: 0px;
                 margin-right: 10px;
@@ -1222,8 +1078,9 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 is-fadeIn
                 {
                   display: block;
-                  height: auto;
+                  height: 100%;
                   left: 50% /* @noflip */;
+                  object-fit: cover;
                   opacity: 0;
                   position: absolute;
                   top: 50%;
@@ -1241,7 +1098,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               {
                 -ms-high-contrast-adjust: none;
                 background-clip: content-box;
-                background-color: #7FBA00;
+                background-color: #6BB700;
                 border-radius: 50%;
                 border: 2px solid #ffffff;
                 bottom: -2px;
@@ -1269,8 +1126,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             justify-content: space-around;
             min-width: 0px;
             padding-bottom: 0;
-            padding-left: 16px;
-            padding-right: 24px;
+            padding-left: 8px;
+            padding-right: 8px;
             padding-top: 0;
             text-align: left;
             width: 100%;
@@ -1280,18 +1137,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
+              color: #323130;
               font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1302,7 +1165,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
               font-size: 12px;
               font-weight: 400;
@@ -1310,11 +1173,17 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1325,19 +1194,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1348,19 +1223,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1373,10 +1254,15 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
     className=
         ms-Label
         {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -1402,7 +1288,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -1423,9 +1309,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={12}
   >
     <div
       className=
@@ -1438,7 +1323,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={12}
     >
       <div
         className=
@@ -1456,8 +1340,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               ms-Image
               ms-Persona-image
               {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
                 border-radius: 50%;
                 border: 0px;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 400;
                 height: 40px;
                 left: 0px;
                 margin-right: 10px;
@@ -1484,8 +1373,9 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 is-fadeIn
                 {
                   display: block;
-                  height: auto;
+                  height: 100%;
                   left: 50% /* @noflip */;
+                  object-fit: cover;
                   opacity: 0;
                   position: absolute;
                   top: 50%;
@@ -1503,7 +1393,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               {
                 -ms-high-contrast-adjust: none;
                 background-clip: content-box;
-                background-color: #FCD116;
+                background-color: #FFAA44;
                 border-radius: 50%;
                 border: 2px solid #ffffff;
                 bottom: -2px;
@@ -1559,8 +1449,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             justify-content: space-around;
             min-width: 0px;
             padding-bottom: 0;
-            padding-left: 16px;
-            padding-right: 24px;
+            padding-left: 12px;
+            padding-right: 12px;
             padding-top: 0;
             text-align: left;
             width: 100%;
@@ -1570,18 +1460,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
+              color: #323130;
               font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1592,18 +1488,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               font-size: 12px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1614,19 +1516,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1637,19 +1545,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1662,10 +1576,15 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
     className=
         ms-Label
         {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -1691,7 +1610,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -1712,9 +1631,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={13}
   >
     <div
       className=
@@ -1727,7 +1645,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={13}
     >
       <div
         className=
@@ -1745,8 +1662,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               ms-Image
               ms-Persona-image
               {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
                 border-radius: 50%;
                 border: 0px;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 400;
                 height: 48px;
                 left: 0px;
                 margin-right: 10px;
@@ -1773,8 +1695,9 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 is-fadeIn
                 {
                   display: block;
-                  height: auto;
+                  height: 100%;
                   left: 50% /* @noflip */;
+                  object-fit: cover;
                   opacity: 0;
                   position: absolute;
                   top: 50%;
@@ -1792,7 +1715,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               {
                 -ms-high-contrast-adjust: none;
                 background-clip: content-box;
-                background-color: #D93B3B;
+                background-color: #C43148;
                 border-radius: 50%;
                 border: 2px solid #ffffff;
                 bottom: -2px;
@@ -1840,8 +1763,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             justify-content: space-around;
             min-width: 0px;
             padding-bottom: 0;
-            padding-left: 16px;
-            padding-right: 24px;
+            padding-left: 12px;
+            padding-right: 12px;
             padding-top: 0;
             text-align: left;
             width: 100%;
@@ -1851,18 +1774,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
-              font-size: 17px;
+              color: #323130;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1873,18 +1802,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               font-size: 12px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1895,19 +1830,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1918,19 +1859,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -1943,10 +1890,335 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
     className=
         ms-Label
         {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 0px;
+          margin-left: 0px;
+          margin-right: 0px;
+          margin-top: 0px;
+          overflow-wrap: break-word;
+          padding-bottom: 5px;
+          padding-left: 0;
+          padding-right: 0;
+          padding-top: 5px;
+          word-wrap: break-word;
+        }
+  >
+    Size 56 Persona (default) 
+  </label>
+  <div
+    className=
+        ms-Persona
+        ms-Persona--size56
+        ms-Persona--online
+        {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
+          align-items: center;
+          box-shadow: none;
+          box-sizing: border-box;
+          color: #323130;
+          display: flex;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 400;
+          height: 56px;
+          margin-bottom: 0px;
+          margin-left: 0px;
+          margin-right: 0px;
+          margin-top: 0px;
+          min-width: 56px;
+          padding-bottom: 0px;
+          padding-left: 0px;
+          padding-right: 0px;
+          padding-top: 0px;
+          position: relative;
+        }
+        & .contextualHost {
+          display: none;
+        }
+        &:hover $primaryText {
+          color: #201f1e;
+        }
+  >
+    <div
+      className=
+          ms-Persona-coin
+          ms-Persona--size56
+          {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+          }
+    >
+      <div
+        className=
+            ms-Persona-imageArea
+            {
+              flex: 0 0 auto;
+              height: 56px;
+              position: relative;
+              text-align: center;
+              width: 56px;
+            }
+      >
+        <div
+          className=
+              ms-Image
+              ms-Persona-image
+              {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
+                border-radius: 50%;
+                border: 0px;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 400;
+                height: 56px;
+                left: 0px;
+                margin-right: 10px;
+                overflow: hidden;
+                perspective: 1px;
+                position: absolute;
+                top: 0px;
+                width: 56px;
+              }
+          style={
+            Object {
+              "height": 56,
+              "width": 56,
+            }
+          }
+        >
+          <img
+            alt=""
+            className=
+                ms-Image-image
+                ms-Image-image--cover
+                ms-Image-image--portrait
+                is-notLoaded
+                is-fadeIn
+                {
+                  display: block;
+                  height: 100%;
+                  left: 50% /* @noflip */;
+                  object-fit: cover;
+                  opacity: 0;
+                  position: absolute;
+                  top: 50%;
+                  transform: translate(-50%,-50%);
+                  width: 100%;
+                }
+            onError={[Function]}
+            onLoad={[Function]}
+            src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png"
+          />
+        </div>
+        <div
+          className=
+              ms-Persona-presence
+              {
+                -ms-high-contrast-adjust: none;
+                background-clip: content-box;
+                background-color: #6BB700;
+                border-radius: 50%;
+                border: 2px solid #ffffff;
+                bottom: -2px;
+                box-sizing: content-box;
+                height: 16px;
+                position: absolute;
+                right: -2px;
+                text-align: center;
+                top: auto;
+                width: 16px;
+              }
+              @media screen and (-ms-high-contrast: active){& {
+                background-color: Highlight;
+                border-color: Window;
+              }
+        >
+          <i
+            aria-hidden={true}
+            className=
+                ms-Persona-presenceIcon
+                {
+                  -moz-osx-font-smoothing: grayscale;
+                  -webkit-font-smoothing: antialiased;
+                  color: #ffffff;
+                  display: inline-block;
+                  font-family: "FabricMDL2Icons";
+                  font-size: 8px;
+                  font-style: normal;
+                  font-weight: normal;
+                  line-height: 16px;
+                  speak: none;
+                  vertical-align: top;
+                }
+                @media screen and (-ms-high-contrast: active){& {
+                  color: Window;
+                }
+            data-icon-name="SkypeCheck"
+            role="presentation"
+          >
+            
+          </i>
+        </div>
+      </div>
+    </div>
+    <div
+      className=
+          ms-Persona-details
+          {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            min-width: 0px;
+            padding-bottom: 0;
+            padding-left: 16px;
+            padding-right: 24px;
+            padding-top: 0;
+            text-align: left;
+            width: 100%;
+          }
+    >
+      <div
+        className=
+            ms-Persona-primaryText
+            {
+              color: #323130;
+              font-size: 20px;
+              font-weight: 400;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+        dir="auto"
+      >
+        <div
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          Annie Lindqvist
+        </div>
+      </div>
+      <div
+        className=
+            ms-Persona-secondaryText
+            {
+              color: #605e5c;
+              font-size: 14px;
+              font-weight: 400;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+        dir="auto"
+      >
+        <div
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          Software Engineer
+        </div>
+      </div>
+      <div
+        className=
+            ms-Persona-tertiaryText
+            {
+              color: #605e5c;
+              display: none;
+              font-size: 14px;
+              font-weight: 400;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+        dir="auto"
+      >
+        <div
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          In a meeting
+        </div>
+      </div>
+      <div
+        className=
+            ms-Persona-optionalText
+            {
+              color: #605e5c;
+              display: none;
+              font-size: 14px;
+              font-weight: 400;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+        dir="auto"
+      >
+        <div
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
+          onBlurCapture={[Function]}
+          onFocusCapture={[Function]}
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          Available at 4:00pm
+        </div>
+      </div>
+    </div>
+  </div>
+  <label
+    className=
+        ms-Label
+        {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
+          box-shadow: none;
+          box-sizing: border-box;
+          color: #323130;
+          display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -1972,7 +2244,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -1993,9 +2265,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={14}
   >
     <div
       className=
@@ -2008,7 +2279,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={14}
     >
       <div
         className=
@@ -2026,8 +2296,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               ms-Image
               ms-Persona-image
               {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
                 border-radius: 50%;
                 border: 0px;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 400;
                 height: 72px;
                 left: 0px;
                 margin-right: 10px;
@@ -2054,8 +2329,9 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 is-fadeIn
                 {
                   display: block;
-                  height: auto;
+                  height: 100%;
                   left: 50% /* @noflip */;
+                  object-fit: cover;
                   opacity: 0;
                   position: absolute;
                   top: 50%;
@@ -2073,7 +2349,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               {
                 -ms-high-contrast-adjust: none;
                 background-clip: content-box;
-                background-color: #E81123;
+                background-color: #C50F1F;
                 border-radius: 50%;
                 border: 2px solid #ffffff;
                 bottom: -2px;
@@ -2138,18 +2414,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
-              font-size: 21px;
+              color: #323130;
+              font-size: 20px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -2160,18 +2442,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -2182,19 +2470,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: block;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -2205,19 +2499,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: none;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -2230,10 +2530,15 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
     className=
         ms-Label
         {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: block;
+          font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
           margin-bottom: 0px;
           margin-left: 0px;
           margin-right: 0px;
@@ -2259,7 +2564,7 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           align-items: center;
           box-shadow: none;
           box-sizing: border-box;
-          color: #333333;
+          color: #323130;
           display: flex;
           font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
           font-size: 14px;
@@ -2280,9 +2585,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
           display: none;
         }
         &:hover $primaryText {
-          color: #212121;
+          color: #201f1e;
         }
-    size={15}
   >
     <div
       className=
@@ -2295,7 +2599,6 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
             font-size: 14px;
             font-weight: 400;
           }
-      size={15}
     >
       <div
         className=
@@ -2313,8 +2616,13 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
               ms-Image
               ms-Persona-image
               {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
                 border-radius: 50%;
                 border: 0px;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 400;
                 height: 100px;
                 left: 0px;
                 margin-right: 10px;
@@ -2341,8 +2649,9 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 is-fadeIn
                 {
                   display: block;
-                  height: auto;
+                  height: 100%;
                   left: 50% /* @noflip */;
+                  object-fit: cover;
                   opacity: 0;
                   position: absolute;
                   top: 50%;
@@ -2376,19 +2685,8 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 background-color: WindowText;
                 border-color: Window;
               }
-              &:before {
-                border-radius: 50%;
-                border: 2px solid #D93B3B;
-                box-sizing: border-box;
-                content: "";
-                height: 100%;
-                left: 0px;
-                position: absolute;
-                top: 0px;
-                width: 100%;
-              }
               &:after {
-                background-color: #D93B3B;
+                background-color: #C43148;
                 content: "";
                 height: 2px;
                 left: 0px;
@@ -2397,17 +2695,28 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
                 transform: translateY(-50%) rotate(-45deg);
                 width: 100%;
               }
+              @media screen and (-ms-high-contrast: active){&:after {
+                background-color: Window;
+                left: 2px;
+                width: calc(100% - 4px);
+              }
+              &:before {
+                border-radius: 50%;
+                border: 2px solid #C43148;
+                box-sizing: border-box;
+                content: "";
+                height: 100%;
+                left: 0px;
+                position: absolute;
+                top: 0px;
+                width: 100%;
+              }
               @media screen and (-ms-high-contrast: active){&:before {
                 border-color: Window;
                 height: calc(100% - 2px);
                 left: 1px;
                 top: 1px;
                 width: calc(100% - 2px);
-              }
-              @media screen and (-ms-high-contrast: active){&:after {
-                background-color: Window;
-                left: 2px;
-                width: calc(100% - 4px);
               }
         >
           <i
@@ -2452,18 +2761,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-primaryText
             {
-              color: #333333;
-              font-size: 21px;
-              font-weight: 300;
+              color: #323130;
+              font-size: 20px;
+              font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -2474,18 +2789,24 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-secondaryText
             {
-              color: #666666;
+              color: #605e5c;
               font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -2496,19 +2817,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-tertiaryText
             {
-              color: #666666;
+              color: #605e5c;
               display: block;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
@@ -2519,19 +2846,25 @@ exports[`Component Examples renders Persona.Basic.Example.tsx correctly 1`] = `
         className=
             ms-Persona-optionalText
             {
-              color: #666666;
+              color: #605e5c;
               display: block;
-              font-size: 12px;
+              font-size: 14px;
               font-weight: 400;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
+        dir="auto"
       >
         <div
-          className="ms-TooltipHost"
+          className=
+              ms-TooltipHost
+              {
+                display: inline;
+              }
           onBlurCapture={[Function]}
           onFocusCapture={[Function]}
+          onKeyDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >

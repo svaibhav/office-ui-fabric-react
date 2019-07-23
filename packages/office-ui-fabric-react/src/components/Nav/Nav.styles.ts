@@ -7,7 +7,8 @@ import {
   FontSizes,
   FontWeights,
   ZIndexes,
-  getGlobalClassNames
+  getGlobalClassNames,
+  HighContrastSelector
 } from '../../Styling';
 
 const GlobalClassNames = {
@@ -44,6 +45,7 @@ export const getStyles = (props: INavStyleProps): INavStyles => {
     isGroup,
     isLink,
     isSelected,
+    isDisabled,
     isButtonEntry,
     navHeight = 36,
     position,
@@ -60,6 +62,7 @@ export const getStyles = (props: INavStyleProps): INavStyles => {
     root: [
       classNames.root,
       className,
+      theme.fonts.medium,
       {
         overflowY: 'auto',
         userSelect: 'none',
@@ -78,6 +81,7 @@ export const getStyles = (props: INavStyleProps): INavStyles => {
         margin: '0 4px',
         overflow: 'hidden',
         verticalAlign: 'middle',
+        textAlign: 'left',
         textOverflow: 'ellipsis'
       }
     ],
@@ -90,7 +94,11 @@ export const getStyles = (props: INavStyleProps): INavStyles => {
         backgroundColor: semanticColors.bodyBackground
       },
       isExpanded && 'is-expanded',
-      isSelected && 'is-selected'
+      isSelected && 'is-selected',
+      isDisabled && 'is-disabled',
+      isDisabled && {
+        color: semanticColors.disabledText
+      }
     ],
     link: [
       classNames.link,
@@ -108,6 +116,19 @@ export const getStyles = (props: INavStyleProps): INavStyles => {
         overflow: 'hidden',
         paddingLeft: leftPadding,
         paddingRight: rightPadding,
+        color: semanticColors.bodyText,
+        selectors: {
+          [HighContrastSelector]: {
+            borderColor: 'transparent',
+            selectors: {
+              ':focus': {
+                borderColor: 'WindowText'
+              }
+            }
+          }
+        }
+      },
+      !isDisabled && {
         selectors: {
           '.ms-Nav-compositeLink:hover &': {
             backgroundColor: palette.neutralLighterAlt,
@@ -126,9 +147,13 @@ export const getStyles = (props: INavStyleProps): INavStyles => {
             top: 0,
             right: 0,
             bottom: 0,
-            left: 0
+            left: 0,
+            pointerEvents: 'none'
           }
         }
+      },
+      isDisabled && {
+        color: semanticColors.disabledText
       },
       isButtonEntry && {
         color: palette.themePrimary
@@ -198,7 +223,8 @@ export const getStyles = (props: INavStyleProps): INavStyles => {
             top: 0,
             right: 0,
             bottom: 0,
-            left: 0
+            left: 0,
+            pointerEvents: 'none'
           }
         }
       }

@@ -1,19 +1,20 @@
-/* tslint:disable */
 import * as React from 'react';
-/* tslint:enable */
+
 import { IIconProps, IconType, IIconStyleProps, IIconStyles } from './Icon.types';
 import { Image } from '../Image/Image';
-import { ImageLoadState } from '../Image/Image.types';
-import { getNativeProps, htmlElementProperties, BaseComponent, classNamesFunction } from '../../Utilities';
+import { ImageLoadState, IImageProps } from '../Image/Image.types';
+import { getNativeProps, htmlElementProperties, classNamesFunction } from '../../Utilities';
 import { getIcon } from '../../Styling';
 
 export interface IIconState {
   imageLoadError: boolean;
 }
 
-const getClassNames = classNamesFunction<IIconStyleProps, IIconStyles>();
+const getClassNames = classNamesFunction<IIconStyleProps, IIconStyles>({
+  disableCaching: true
+});
 
-export class IconBase extends BaseComponent<IIconProps, IIconState> {
+export class IconBase extends React.Component<IIconProps, IIconState> {
   constructor(props: IIconProps) {
     super(props);
     this.state = {
@@ -22,17 +23,27 @@ export class IconBase extends BaseComponent<IIconProps, IIconState> {
   }
 
   public render() {
-    const { ariaLabel, className, styles, iconName, imageErrorAs } = this.props;
+    const { ariaLabel, className, styles, iconName, imageErrorAs, theme } = this.props;
     const isPlaceholder = typeof iconName === 'string' && iconName.length === 0;
     const isImage = this.props.iconType === IconType.image || this.props.iconType === IconType.Image;
     const { iconClassName, children } = this._getIconContent(iconName);
 
     const classNames = getClassNames(styles, {
+      theme: theme!,
       className,
       iconClassName,
       isImage,
       isPlaceholder
     });
+
+    const RootType = isImage ? 'div' : 'i';
+    const nativeProps = getNativeProps<React.HTMLAttributes<HTMLDivElement>>(this.props, htmlElementProperties);
+    const { imageLoadError } = this.state;
+    const imageProps: IImageProps = {
+      ...this.props.imageProps,
+      onLoadingStateChange: this.onImageLoadingStateChange
+    };
+    const ImageType = (imageLoadError && imageErrorAs) || Image;
 
     const containerProps = ariaLabel
       ? {
@@ -40,17 +51,11 @@ export class IconBase extends BaseComponent<IIconProps, IIconState> {
         }
       : {
           role: 'presentation',
-          'aria-hidden': true
+          'aria-hidden': imageProps.alt || imageProps['aria-labelledby'] ? false : true
         };
 
-    const RootType = isImage ? 'div' : 'i';
-    const nativeProps = getNativeProps(this.props, htmlElementProperties);
-    const { imageLoadError } = this.state;
-    const imageProps = { ...this.props.imageProps, onLoadingStateChange: this.onImageLoadingStateChange };
-    const ImageType = (imageLoadError && imageErrorAs) || Image;
-
     return (
-      <RootType data-icon-name={iconName} {...nativeProps} {...containerProps} className={classNames.root}>
+      <RootType data-icon-name={iconName} {...containerProps} {...nativeProps} className={classNames.root}>
         {isImage ? <ImageType {...imageProps} /> : children}
       </RootType>
     );

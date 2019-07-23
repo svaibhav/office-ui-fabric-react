@@ -4,7 +4,11 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
 <div>
   <div>
     <div
-      className="ms-FocusZone"
+      className=
+          ms-FocusZone
+          &:focus {
+            outline: none;
+          }
       data-focuszone-id="FocusZone1"
       onFocus={[Function]}
       onKeyDown={[Function]}
@@ -15,9 +19,12 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
         className=
             ms-Pivot
             {
+              -moz-osx-font-smoothing: grayscale;
+              -webkit-font-smoothing: antialiased;
               box-shadow: none;
               box-sizing: border-box;
               color: #0078d4;
+              font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
               font-size: 14px;
               font-weight: 400;
               margin-bottom: 0px;
@@ -48,14 +55,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 border-radius: 0px;
                 border: 0px;
                 box-sizing: border-box;
-                color: #333333;
+                color: #323130;
                 cursor: pointer;
                 display: inline-block;
                 font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
                 font-size: 14px;
                 font-weight: 600;
-                height: 40px;
-                line-height: 40px;
+                height: 44px;
+                line-height: 44px;
                 margin-right: 8px;
                 outline: transparent;
                 padding-bottom: 0;
@@ -72,14 +79,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 border: 0;
               }
               .ms-Fabric--isFocusVisible &:focus:after {
-                border: 1px solid #ffffff;
-                bottom: 0px;
-                content: "";
-                left: 0px;
-                outline: 1px solid #666666;
-                position: absolute;
-                right: 0px;
-                top: 0px;
+                border: 0px;
+                bottom: 2px;
+                content: attr(data-content);
+                left: 2px;
+                outline: 1px solid #605e5c;
+                position: relative;
+                right: 2px;
+                top: 2px;
                 z-index: 1;
               }
               @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -96,7 +103,8 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 top: 0px;
               }
               &:hover {
-                color: #333333;
+                background-color: #f3f2f1;
+                color: #201f1e;
                 cursor: pointer;
               }
               @media screen and (-ms-high-contrast: active){&:hover {
@@ -110,26 +118,26 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 outline: none;
               }
               &:active {
-                color: #000000;
+                background-color: #edebe9;
+                color: #201f1e;
               }
               &:active .ms-Button-icon {
                 color: #004578;
               }
               &:before {
-                background-color: transparent;
-                border-bottom: 2px solid #0078d4;
+                background-color: #0078d4;
                 bottom: 0px;
-                box-sizing: border-box;
                 content: "";
                 height: 2px;
                 left: 8px;
                 position: absolute;
                 right: 8px;
-                transition: background-color 0.267s cubic-bezier(.1,.25,.75,.9);
+                transition: left 0.267s cubic-bezier(.1,.25,.75,.9),
+                                    right 0.267s cubic-bezier(.1,.25,.75,.9);
               }
               &:after {
                 color: transparent;
-                content: attr(title);
+                content: attr(data-content);
                 display: block;
                 font-weight: 700;
                 height: 1px;
@@ -137,14 +145,19 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 visibility: hidden;
               }
               .ms-Fabric--isFocusVisible &:focus {
-                outline: 1px solid #666666;
+                outline: 1px solid #605e5c;
               }
               @media screen and (-ms-high-contrast: active){&:before {
-                border-bottom-color: Highlight;
+                background-color: Highlight;
+              }
+              &:hover::before {
+                left: 0px;
+                right: 0px;
               }
               @media screen and (-ms-high-contrast: active){& {
                 color: Highlight;
               }
+          data-content="Callout"
           data-is-focusable={true}
           id="Pivot0-Tab0"
           name="Callout"
@@ -201,14 +214,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 border-radius: 0px;
                 border: 0px;
                 box-sizing: border-box;
-                color: #333333;
+                color: #323130;
                 cursor: pointer;
                 display: inline-block;
                 font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
                 font-size: 14px;
                 font-weight: 400;
-                height: 40px;
-                line-height: 40px;
+                height: 44px;
+                line-height: 44px;
                 margin-right: 8px;
                 outline: transparent;
                 padding-bottom: 0;
@@ -225,14 +238,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 border: 0;
               }
               .ms-Fabric--isFocusVisible &:focus:after {
-                border: 1px solid #ffffff;
-                bottom: 0px;
-                content: "";
-                left: 0px;
-                outline: 1px solid #666666;
-                position: absolute;
-                right: 0px;
-                top: 0px;
+                border: 0px;
+                bottom: 2px;
+                content: attr(data-content);
+                left: 2px;
+                outline: 1px solid #605e5c;
+                position: relative;
+                right: 2px;
+                top: 2px;
                 z-index: 1;
               }
               @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -249,7 +262,8 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 top: 0px;
               }
               &:hover {
-                color: #333333;
+                background-color: #f3f2f1;
+                color: #201f1e;
                 cursor: pointer;
               }
               @media screen and (-ms-high-contrast: active){&:hover {
@@ -263,7 +277,8 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 outline: none;
               }
               &:active {
-                color: #000000;
+                background-color: #edebe9;
+                color: #201f1e;
               }
               &:active .ms-Button-icon {
                 color: #004578;
@@ -276,11 +291,12 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 left: 8px;
                 position: absolute;
                 right: 8px;
-                transition: background-color 0.267s cubic-bezier(.1,.25,.75,.9);
+                transition: left 0.267s cubic-bezier(.1,.25,.75,.9),
+                                    right 0.267s cubic-bezier(.1,.25,.75,.9);
               }
               &:after {
                 color: transparent;
-                content: attr(title);
+                content: attr(data-content);
                 display: block;
                 font-weight: 700;
                 height: 1px;
@@ -288,12 +304,9 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 visibility: hidden;
               }
               .ms-Fabric--isFocusVisible &:focus {
-                outline: 1px solid #666666;
+                outline: 1px solid #605e5c;
               }
-              &:hover::before {
-                border-bottom: 2px solid transparent;
-                box-sizing: border-box;
-              }
+          data-content="Spinner"
           data-is-focusable={true}
           id="Pivot0-Tab1"
           name="Spinner"
@@ -350,14 +363,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 border-radius: 0px;
                 border: 0px;
                 box-sizing: border-box;
-                color: #333333;
+                color: #323130;
                 cursor: pointer;
                 display: inline-block;
                 font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
                 font-size: 14px;
                 font-weight: 400;
-                height: 40px;
-                line-height: 40px;
+                height: 44px;
+                line-height: 44px;
                 margin-right: 8px;
                 outline: transparent;
                 padding-bottom: 0;
@@ -374,14 +387,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 border: 0;
               }
               .ms-Fabric--isFocusVisible &:focus:after {
-                border: 1px solid #ffffff;
-                bottom: 0px;
-                content: "";
-                left: 0px;
-                outline: 1px solid #666666;
-                position: absolute;
-                right: 0px;
-                top: 0px;
+                border: 0px;
+                bottom: 2px;
+                content: attr(data-content);
+                left: 2px;
+                outline: 1px solid #605e5c;
+                position: relative;
+                right: 2px;
+                top: 2px;
                 z-index: 1;
               }
               @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -398,7 +411,8 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 top: 0px;
               }
               &:hover {
-                color: #333333;
+                background-color: #f3f2f1;
+                color: #201f1e;
                 cursor: pointer;
               }
               @media screen and (-ms-high-contrast: active){&:hover {
@@ -412,7 +426,8 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 outline: none;
               }
               &:active {
-                color: #000000;
+                background-color: #edebe9;
+                color: #201f1e;
               }
               &:active .ms-Button-icon {
                 color: #004578;
@@ -425,11 +440,12 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 left: 8px;
                 position: absolute;
                 right: 8px;
-                transition: background-color 0.267s cubic-bezier(.1,.25,.75,.9);
+                transition: left 0.267s cubic-bezier(.1,.25,.75,.9),
+                                    right 0.267s cubic-bezier(.1,.25,.75,.9);
               }
               &:after {
                 color: transparent;
-                content: attr(title);
+                content: attr(data-content);
                 display: block;
                 font-weight: 700;
                 height: 1px;
@@ -437,12 +453,9 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                 visibility: hidden;
               }
               .ms-Fabric--isFocusVisible &:focus {
-                outline: 1px solid #666666;
+                outline: 1px solid #605e5c;
               }
-              &:hover::before {
-                border-bottom: 2px solid transparent;
-                box-sizing: border-box;
-              }
+          data-content="Persona"
           data-is-focusable={true}
           id="Pivot0-Tab2"
           name="Persona"
@@ -496,10 +509,15 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
           className=
               ms-Label
               {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
                 box-shadow: none;
                 box-sizing: border-box;
-                color: #333333;
+                color: #323130;
                 display: block;
+                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                font-size: 14px;
+                font-weight: 600;
                 margin-bottom: 0px;
                 margin-left: 0px;
                 margin-right: 0px;
@@ -531,11 +549,11 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                   {
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
-                    background-color: #f4f4f4;
-                    border-radius: 0px;
-                    border: 1px solid transparent;
+                    background-color: #ffffff;
+                    border-radius: 2px;
+                    border: 1px solid #8a8886;
                     box-sizing: border-box;
-                    color: #333333;
+                    color: #323130;
                     cursor: pointer;
                     display: inline-block;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
@@ -558,14 +576,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                     border: 0;
                   }
                   .ms-Fabric--isFocusVisible &:focus:after {
-                    border: 1px solid #ffffff;
-                    bottom: 0px;
+                    border: 1px solid transparent;
+                    bottom: 2px;
                     content: "";
-                    left: 0px;
-                    outline: 1px solid #666666;
+                    left: 2px;
+                    outline: 1px solid #605e5c;
                     position: absolute;
-                    right: 0px;
-                    top: 0px;
+                    right: 2px;
+                    top: 2px;
                     z-index: 1;
                   }
                   @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus:after {
@@ -582,19 +600,18 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                     top: 0px;
                   }
                   &:hover {
-                    background-color: #eaeaea;
-                    color: #212121;
+                    background-color: #f3f2f1;
+                    color: #201f1e;
                   }
                   @media screen and (-ms-high-contrast: active){&:hover {
                     border-color: Highlight;
                     color: Highlight;
                   }
                   &:active {
-                    background-color: #c8c8c8;
-                    color: #212121;
+                    background-color: #edebe9;
+                    color: #201f1e;
                   }
               data-is-focusable={true}
-              id="toggleCallout"
               onClick={[Function]}
               onKeyDown={[Function]}
               onKeyPress={[Function]}
@@ -632,7 +649,7 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                           margin-right: 4px;
                           margin-top: 0;
                         }
-                    id="id__11"
+                    id="id__13"
                   >
                     Show callout
                   </div>
@@ -650,7 +667,7 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                   {
                     -moz-osx-font-smoothing: grayscale;
                     -webkit-font-smoothing: antialiased;
-                    color: #333333;
+                    color: #323130;
                     font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
                     font-size: 14px;
                     font-weight: 400;
@@ -664,13 +681,6 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                   }
                   & textarea {
                     font-family: inherit;
-                  }
-                  button {
-                    margin-bottom: 0px;
-                    margin-left: 0px;
-                    margin-right: 0px;
-                    margin-top: 0px;
-                    overflow: visible;
                   }
               onBlur={[Function]}
               onChange={[Function]}
@@ -716,11 +726,14 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                       ms-Callout
                       ms-CalloutExample-callout
                       {
-                        border-color: #eaeaea;
-                        border-style: solid;
-                        border-width: 1px;
-                        box-shadow: 0 0 5px 0px rgba(0,0,0,0.4);
+                        -moz-osx-font-smoothing: grayscale;
+                        -webkit-font-smoothing: antialiased;
+                        border-radius: 2px;
+                        box-shadow: 0 6.4px 14.4px 0 rgba(0, 0, 0, 0.132), 0 1.2px 3.6px 0 rgba(0, 0, 0, 0.108);
                         box-sizing: border-box;
+                        font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                        font-size: 14px;
+                        font-weight: 400;
                         outline: transparent;
                         position: absolute;
                       }
@@ -733,7 +746,6 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                         border: 0px;
                       }
                   hidden={true}
-                  role="alertdialog"
                   style={
                     Object {
                       "filter": "opacity(0)",
@@ -741,7 +753,97 @@ exports[`Component Examples renders Pivot.Fabric.Example.tsx correctly 1`] = `
                     }
                   }
                   tabIndex={-1}
-                />
+                >
+                  <div
+                    aria-describedby="callout-description12"
+                    aria-labelledby="callout-label11"
+                    className=
+                        ms-Callout-main
+                        {
+                          background-color: #ffffff;
+                          border-radius: 2px;
+                          overflow-x: hidden;
+                          overflow-y: auto;
+                          position: relative;
+                        }
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    role="alertdialog"
+                    style={
+                      Object {
+                        "maxHeight": 752,
+                        "outline": "none",
+                        "overflowY": undefined,
+                      }
+                    }
+                  >
+                    <div
+                      className="ms-CalloutExample-header"
+                    >
+                      <p
+                        className="ms-CalloutExample-title"
+                        id="callout-label11"
+                      >
+                        All of your favorite people
+                      </p>
+                    </div>
+                    <div
+                      className="ms-CalloutExample-inner"
+                    >
+                      <div
+                        className="ms-CalloutExample-content"
+                      >
+                        <p
+                          className="ms-CalloutExample-subText"
+                          id="callout-description12"
+                        >
+                          Message body is optional. If help documentation is available, consider adding a link to learn more at the bottom.
+                        </p>
+                      </div>
+                      <div
+                        className="ms-CalloutExample-actions"
+                      >
+                        <a
+                          className=
+                              ms-Link
+                              ms-CalloutExample-link
+                              {
+                                -moz-osx-font-smoothing: grayscale;
+                                -webkit-font-smoothing: antialiased;
+                                color: #0078d4;
+                                font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+                                font-size: inherit;
+                                font-weight: inherit;
+                                outline: none;
+                                text-decoration: none;
+                              }
+                              .ms-Fabric--isFocusVisible &:focus {
+                                box-shadow: 0 0 0 1px #605e5c inset;
+                              }
+                              @media screen and (-ms-high-contrast: active){.ms-Fabric--isFocusVisible &:focus {
+                                outline: 1px solid WindowText;
+                              }
+                              @media screen and (-ms-high-contrast: active){& {
+                                border-bottom: none;
+                              }
+                              &:active, &:hover, &:active:hover {
+                                color: #004578;
+                                text-decoration: underline;
+                              }
+                              &:focus {
+                                color: #0078d4;
+                              }
+                          href="http://microsoft.com"
+                          onClick={[Function]}
+                          target="_blank"
+                        >
+                          Go to microsoft
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </span>

@@ -4,21 +4,20 @@ import { ListBasicExample } from './examples/List.Basic.Example';
 import { ListGridExample } from './examples/List.Grid.Example';
 import { ListScrollingExample } from './examples/List.Scrolling.Example';
 import { ListGhostingExample } from './examples/List.Ghosting.Example';
-import { ListStatus } from './List.checklist';
 import { createListItems } from '../../utilities/exampleData';
 
 const ListBasicExampleCode = require('!raw-loader!office-ui-fabric-react/src/components/List/examples/List.Basic.Example.tsx') as string;
 const ListGridExampleCode = require('!raw-loader!office-ui-fabric-react/src/components/List/examples/List.Grid.Example.tsx') as string;
 const ListScrollingExampleCode = require('!raw-loader!office-ui-fabric-react/src/components/List/examples/List.Scrolling.Example.tsx') as string;
 const ListGhostingExampleCode = require('!raw-loader!office-ui-fabric-react/src/components/List/examples/List.Ghosting.Example.tsx') as string;
+const ListGhostingExampleCodepen = require('!@uifabric/codepen-loader!office-ui-fabric-react/src/components/List/examples/List.Ghosting.Example.tsx') as string;
 
 const _cachedItems = createListItems(5000);
 
 export const ListPageProps: IDocPageProps = {
   title: 'List',
   componentName: 'ListExample',
-  componentUrl:
-    'https://github.com/OfficeDev/office-ui-fabric-react/tree/master/packages/office-ui-fabric-react/src/components/List',
+  componentUrl: 'https://github.com/OfficeDev/office-ui-fabric-react/tree/master/packages/office-ui-fabric-react/src/components/List',
   examples: [
     {
       title: 'List of 5000 grid items',
@@ -38,15 +37,13 @@ export const ListPageProps: IDocPageProps = {
     {
       title: 'Rendering ghost items while the list is scrolling',
       code: ListGhostingExampleCode,
+      codepenJS: ListGhostingExampleCodepen,
       view: <ListGhostingExample items={_cachedItems} />
     }
   ],
 
   allowNativeProps: true,
-
-  propertiesTablesSources: [require<string>('!raw-loader!office-ui-fabric-react/src/components/List/List.types.ts')],
   overview: require<string>('!raw-loader!office-ui-fabric-react/src/components/List/docs/ListOverview.md'),
   isHeaderVisible: true,
-  isFeedbackVisible: true,
-  componentStatus: ListStatus
+  isFeedbackVisible: true
 };
