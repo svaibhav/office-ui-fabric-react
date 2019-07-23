@@ -8,8 +8,9 @@ const classNames = mergeStyleSets({
   kanbanContainer: {
     display: 'flex',
     direction: 'column',
-    overflow: 'hidden',
-    maxHeight: 'inherit'
+    overflowY: 'hidden',
+    overflowX: 'auto',
+    height: 'inherit'
   },
   kanbanLaneColumn: {
     position: 'relative',
@@ -19,7 +20,19 @@ const classNames = mergeStyleSets({
     overflow: 'hidden'
   },
   laneListWrapper: {
-    overflowY: 'auto'
+    overflowY: 'auto',
+    maxHeight: '80%',
+    overflowX: 'hidden'
+  },
+  fetchItemsButton: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  },
+  laneItem: {
+    overflow: 'hidden'
+  },
+  laneWrapper: {
+    border: '1px dashed'
   }
 });
 
@@ -32,11 +45,8 @@ export class KanbanBoard extends React.PureComponent<IKanbanBoardProps> {
     return (
       <div className={classNames.kanbanContainer}>
         {columns.map(element => {
-          return (
-            <div>
-              <KanbanLane {...this.props} laneColumn={element} />
-            </div>
-          );
+          const key = KanbanLane.name + element.key;
+          return <KanbanLane {...this.props} laneColumn={element} key={key} />;
         })}
       </div>
     );
@@ -47,8 +57,6 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
   constructor(props: IKanbanLaneProps) {
     super(props);
     this._laneColumnWidth = (this.props.laneColumn.width && this.props.laneColumn.width.toString() + 'px') || this._laneColumnWidth;
-    this._onRenderLaneItem = this._onRenderLaneItem.bind(this);
-    this._fetchItems = this._fetchItems.bind(this);
     this.state = {
       items: (this.props.getItems && this.props.getItems(this.props.laneColumn)) || []
     };
@@ -56,29 +64,29 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
   public render(): JSX.Element {
     const laneWrapperStyle = { width: this._laneColumnWidth };
     return (
-      <div style={laneWrapperStyle}>
+      <div style={laneWrapperStyle} className={classNames.laneWrapper}>
         {this._onRenderLaneColumn(this.props.laneColumn)}
-        <div data-is-scrollable={true} className={classNames.laneListWrapper}>
+        <div className={classNames.laneListWrapper}>
           <List items={this.state.items} onRenderCell={this._onRenderLaneItem} />
-          <DefaultButton text={`Fetch more items (${this.props.laneColumn.name})`} onClick={this._fetchItems} />
+          <DefaultButton primary text={`${this.props.laneColumn.name}`} onClick={this._fetchItems} style={{ margin: 5 }} />
         </div>
       </div>
     );
   }
 
-  private _fetchItems() {
+  private _fetchItems = () => {
     // improve this logic
     const newItems = (this.props.getItems && this.props.getItems(this.props.laneColumn)) || [];
     this.setState(state => {
       // Important: read `state` instead of `this.state` when updating.
-      return { items: { ...state.items, ...newItems } };
+      return { items: [...state.items, ...newItems] };
     });
-  }
+  };
 
-  private _onRenderLaneItem(item?: any, index?: number): JSX.Element {
+  private _onRenderLaneItem = (item?: any, index?: number): JSX.Element => {
     const { onRenderLaneItem } = this.props;
-    return <div style={{ width: this._laneColumnWidth }}>{onRenderLaneItem && onRenderLaneItem(item, index)}</div>;
-  }
+    return <div className={classNames.laneItem}>{onRenderLaneItem && onRenderLaneItem(item, index)}</div>;
+  };
 
   private _onRenderLaneColumn(laneColumn: ILaneColumn) {
     return (
