@@ -3,7 +3,9 @@ import { IKanbanBoardProps, IKanbanLaneProps, IKanbanLaneState, IKanbanLaneItemP
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { List } from 'office-ui-fabric-react/lib/List';
 import { css } from 'office-ui-fabric-react';
-import { DefaultButton } from '../Button';
+import { Callout, DirectionalHint } from 'office-ui-fabric-react/lib/Callout';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { DefaultButton, CommandButton } from '../Button';
 import {
   DragDropContextProvider,
   DragSourceSpec,
@@ -130,6 +132,11 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
         deleteItem={this._deleteItem}
         moveItem={this._moveItem}
         parentLaneKey={this.props.laneColumn.key}
+        actions={...[{
+          key: this.props.laneColumn.key + '_deleteItem',
+          label: 'Delete Item',
+          onClick: () => this._deleteItem(index)
+        }]}
       />
     );
   };
@@ -147,10 +154,6 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
     const items: any[] = this.state.items.slice();
     items.splice(index, 1);
     this.setState({ items: items });
-    // this.setState(state => {
-    //   // Important: read `state` instead of `this.state` when updating.
-    //   return { items: items };
-    // });
   };
 
   private _moveItem = (sourceIndex: any, destinationIndex: any): void => {
@@ -179,22 +182,80 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
   };
 }
 
-class KanbanLaneItem extends React.PureComponent<IKanbanLaneItemProps> {
+class KanbanLaneItem extends React.PureComponent<IKanbanLaneItemProps, { showButton: boolean; showCallout: boolean }> {
+  private _button: HTMLElement | null;
+
   constructor(props: IKanbanLaneItemProps) {
     super(props);
+    this.state = { showButton: false, showCallout: false };
   }
+
   public render(): JSX.Element {
     const { onRenderLaneItem, item, index, connectDragSource, connectDragPreview, connectDropTarget, isDragging, isOver } = this.props;
     return connectDropTarget(
       connectDragPreview(
         connectDragSource(
           <div className={css(classNames.laneItem, isOver ? classNames.onHover : '')} style={{ opacity: isDragging ? 0 : 1 }}>
-            {onRenderLaneItem && onRenderLaneItem(item, index)}
+            <div onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} style={{ position: 'relative' }}>
+              {onRenderLaneItem && onRenderLaneItem(item, index)}
+              {this.state.showButton && this._renderCommandButton()}
+            </div>
           </div>
         )
       )
     );
   }
+
+  private _onMouseEnter = (): void => {
+    console.log('mouseEnter');
+    this.setState({ showButton: true });
+  };
+
+  private _onMouseLeave = (): void => {
+    console.log('mouseLeave');
+    this.setState({ showButton: false, showCallout: false });
+  };
+
+  private _renderCommandButton = (): JSX.Element => {
+    return (
+      <div onClick={this._toggleCallout} ref={ref => (this._button = ref)} style={{ position: 'absolute', top: 10, right: 10 }}>
+        <Icon iconName={'MoreVertical'} style={{ fontWeight: 700, fontSize: '20px' }} />
+        {this.state.showCallout && this._showConditionCallout()}
+      </div>
+    );
+  };
+
+  private _toggleCallout = () => {
+    this.setState({ showCallout: !this.state.showCallout }, () => {
+      console.log('showing callout:', this.state.showCallout);
+    });
+  }
+
+  private _dismissCallout = () => this.setState({ showCallout: false });
+
+  private _showConditionCallout = () => {
+    const { actions } = this.props;
+    return (
+      <Callout
+        {...{
+          gapSpace: 0,
+          calloutWidth: 150,
+          isBeakVisible: false,
+          target: this._button,
+          onDismiss: this._dismissCallout,
+          directionalHint: DirectionalHint.bottomRightEdge
+        }}
+      >
+        <div style={{ display: 'flex' }}>
+          {
+            actions && actions.map((action: { key: string, label: string, onClick: () => void }) => {
+              return (<CommandButton key={action.key} onClick={action.onClick}> {action.label} </CommandButton>);
+            })
+          }
+        </div>
+      </Callout>
+    );
+  };
 }
 
 const dragSourceSpec: DragSourceSpec<any, any> = {
@@ -232,7 +293,6 @@ const dropTargetSpec: DropTargetSpec<any> = {
   },
 
   hover(props: IKanbanLaneItemProps, monitor: DropTargetMonitor, component: React.Component): void {
-    //console.log("onHover");
     const item = monitor.getItem();
     const dragIndex = item.index;
     const hoverIndex = props.index;
