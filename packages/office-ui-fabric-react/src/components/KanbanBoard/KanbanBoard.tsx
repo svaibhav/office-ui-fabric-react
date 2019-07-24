@@ -74,7 +74,12 @@ export class KanbanBoard extends React.Component<IKanbanBoardProps> {
       <DragDropContextProvider backend={HTML5Backend}>
         <div className={classNames.kanbanContainer}>
           {this.props.laneColumns.map(laneColumn => (
-            <KanbanLane {...this.props} laneColumn={laneColumn} key={laneColumn.key} />
+            <KanbanLane
+              {...this.props}
+              laneColumn={laneColumn}
+              key={laneColumn.key}
+              items={this.props.getLaneItems && this.props.getLaneItems(laneColumn, this.props.items)}
+            />
           ))}
         </div>
       </DragDropContextProvider>
@@ -87,7 +92,7 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
     super(props);
     this._laneColumnWidth = (this.props.laneColumn.width && this.props.laneColumn.width.toString() + 'px') || this._laneColumnWidth;
     this.state = {
-      items: (this.props.getItems && this.props.getItems(this.props.laneColumn)) || []
+      items: this.props.items || []
     };
   }
   public render(): JSX.Element {
@@ -105,8 +110,8 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
   }
 
   private _fetchItems = () => {
-    const { getItems, laneColumn } = this.props;
-    const newItems = (getItems && getItems(laneColumn)) || [];
+    const { getMoreLaneItems, laneColumn } = this.props;
+    const newItems = (getMoreLaneItems && getMoreLaneItems(laneColumn)) || [];
     this.setState(state => {
       // Important: read `state` instead of `this.state` when updating.
       return { items: [...state.items, ...newItems] };
