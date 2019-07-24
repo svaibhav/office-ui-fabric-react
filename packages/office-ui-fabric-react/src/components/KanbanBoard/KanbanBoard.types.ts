@@ -30,5 +30,6 @@ export interface IKanbanLaneItemProps {
   addItem: (index: any, item: any) => void;
   moveItem: (sourceIndex: any, destinationIndex: any) => void;
   isDragging?: boolean;
+  isOver?: boolean;
   parentLaneKey: string;
 }
