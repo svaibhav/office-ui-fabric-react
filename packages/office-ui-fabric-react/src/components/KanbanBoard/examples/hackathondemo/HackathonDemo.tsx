@@ -119,9 +119,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
   };
 
   private _bootstrapData = () => {
-    const items: IItem[] = this._getItems().sort((item1, item2) => {
-      return item1.color === item2.color ? 0 : item1.color < item2.color ? -1 : 1;
-    });
+    const items: IItem[] = this._getItems();
     const columns: IColumn[] = [
       { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200 },
       { key: 'color', name: 'Color', fieldName: 'color', minWidth: 100, maxWidth: 200 }
@@ -162,17 +160,25 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
   };
 
   private _getItems = (): IItem[] => {
-    const { items } = this.state;
-    if (items) {
-      return items;
+    if (this.state) {
+      const { items } = this.state;
+      if (items) {
+        return items.sort(this._sortItems);
+      }
     }
 
-    return this._locations.map((location, index) => {
-      return {
-        key: `item_key_${index}`,
-        name: location,
-        color: this._colors[Math.floor(Math.random() * this._colors.length)]
-      };
-    });
+    return this._locations
+      .map((location, index) => {
+        return {
+          key: `item_key_${index}`,
+          name: location,
+          color: this._colors[Math.floor(Math.random() * this._colors.length)]
+        };
+      })
+      .sort(this._sortItems);
+  };
+
+  private _sortItems = (item1: IItem, item2: IItem) => {
+    return item1.color === item2.color ? 0 : item1.color < item2.color ? -1 : 1;
   };
 }
