@@ -103,7 +103,7 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
         {this._onRenderLaneColumn()}
         <div className={classNames.laneListWrapper}>
           <List items={this.state.items} onRenderCell={this._onRenderLaneItem} />
-          <PrimaryButton iconProps={{ iconName: 'Add' }} onClick={this._onNewButtonClicked} style={{ margin: 5 }} />
+          <PrimaryButton primary text={'New'} iconProps={{ iconName: 'Add' }} onClick={this._onNewButtonClicked} style={{ margin: 5 }} />
           <DefaultButton primary text={`${laneColumn.name}`} onClick={this._fetchItems} style={{ margin: 5 }} />
         </div>
       </div>
