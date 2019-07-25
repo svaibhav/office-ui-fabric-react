@@ -30,9 +30,7 @@ interface IHackathonDemoProps {}
 interface IHackathonDemoState {
   isKanbanMode: boolean;
   items: IItem[];
-  groups: IGroup[];
   columns: IColumn[];
-  laneColumns: ILaneColumn[];
 }
 
 const toggleStyles: Partial<IToggleStyles> = {
@@ -72,18 +70,24 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
   constructor(props: IHackathonDemoProps) {
     super(props);
 
-    const { items, groups, columns, laneColumns } = this._bootstrapData();
+    const { items, columns } = this._bootstrapData();
     this.state = {
       isKanbanMode: false,
       items,
-      groups,
-      columns,
-      laneColumns
+      columns
     };
   }
 
   public render(): JSX.Element {
-    const { isKanbanMode, items, groups, columns, laneColumns } = this.state;
+    const { isKanbanMode, items, columns } = this.state;
+    const groups: IGroup[] = this._getGroups(items);
+    const laneColumns: ILaneColumn[] = groups.map(group => {
+      return {
+        name: group.name,
+        key: `lane_column_${group.name}`
+      };
+    });
+
     return (
       <div>
         <Toggle label="Kanban mode" inlineLabel checked={isKanbanMode} onChange={this._onChangeCompactMode} styles={toggleStyles} />
@@ -118,18 +122,11 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     const items: IItem[] = this._getItems().sort((item1, item2) => {
       return item1.color === item2.color ? 0 : item1.color < item2.color ? -1 : 1;
     });
-    const groups: IGroup[] = this._getGroups(items);
-    const laneColumns: ILaneColumn[] = groups.map(group => {
-      return {
-        name: group.name,
-        key: `lane_column_${group.name}`
-      };
-    });
     const columns: IColumn[] = [
       { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200 },
       { key: 'color', name: 'Color', fieldName: 'color', minWidth: 100, maxWidth: 200 }
     ];
-    return { items, groups, columns, laneColumns };
+    return { items, columns };
   };
 
   private _getGroups = (_items: IItem[]): IGroup[] => {

@@ -36,12 +36,17 @@ export class KanbanHackthonExample extends React.Component<IKanbanHackthonProps,
     const { laneColumns } = this.props;
     return (
       <div className={classNamesExample.wrapper} data-is-scrollable={true}>
-        <KanbanBoard laneColumns={laneColumns} getItems={this._getItems} onRenderLaneItem={this._onRenderLaneItem} />
+        <KanbanBoard
+          laneColumns={laneColumns}
+          getLaneItems={this._getLaneItems}
+          getMoreLaneItems={this._getLaneItems}
+          onRenderLaneItem={this._onRenderLaneItem}
+        />
       </div>
     );
   }
 
-  private _getItems = (laneColumn: ILaneColumn) => {
+  private _getLaneItems = (laneColumn: ILaneColumn) => {
     const { items } = this.props;
     return items.filter(item => item.color.toUpperCase() === laneColumn.name);
   };
