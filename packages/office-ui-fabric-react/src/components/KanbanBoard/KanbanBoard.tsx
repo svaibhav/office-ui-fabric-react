@@ -2,8 +2,8 @@ import * as React from 'react';
 import { IKanbanBoardProps, IKanbanLaneProps, IKanbanLaneState, IKanbanLaneItemProps } from './KanbanBoard.types';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { List } from 'office-ui-fabric-react/lib/List';
+import { DefaultButton, PrimaryButton } from '../Button';
 import { css } from 'office-ui-fabric-react';
-import { DefaultButton } from '../Button';
 import {
   DragDropContextProvider,
   DragSourceSpec,
@@ -103,11 +103,21 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
         {this._onRenderLaneColumn()}
         <div className={classNames.laneListWrapper}>
           <List items={this.state.items} onRenderCell={this._onRenderLaneItem} />
+          <PrimaryButton primary text={'New'} iconProps={{ iconName: 'Add' }} onClick={this._onNewButtonClicked} style={{ margin: 5 }} />
           <DefaultButton primary text={`${laneColumn.name}`} onClick={this._fetchItems} style={{ margin: 5 }} />
         </div>
       </div>
     );
   }
+
+  private _onNewButtonClicked = () => {
+    const { onRenderNewCardPopUp } = this.props;
+    const newItems = onRenderNewCardPopUp && onRenderNewCardPopUp();
+    this.setState(state => {
+      // Important: read `state` instead of `this.state` when updating.
+      return { items: [...state.items, ...newItems] };
+    });
+  };
 
   private _fetchItems = () => {
     const { getMoreLaneItems, laneColumn } = this.props;

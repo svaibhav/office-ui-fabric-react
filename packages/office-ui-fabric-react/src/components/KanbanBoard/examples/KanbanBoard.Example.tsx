@@ -81,6 +81,7 @@ export class KanbanBoardExample extends React.Component {
           getLaneItems={this._getLaneItems}
           getMoreLaneItems={this._getItems}
           onRenderLaneItem={this._onRenderLaneItem}
+          onRenderNewCardPopUp={this._onNewButtonClicked}
         />
       </div>
     );
@@ -107,6 +108,20 @@ export class KanbanBoardExample extends React.Component {
     return items;
   };
 
+  private _onNewButtonClicked(): any[] {
+    const location = 'asdas';
+    const color = 'Red';
+    const col = location;
+    const otherColumn = 'value Column' + 10;
+    const newItem = {
+      location,
+      color,
+      col,
+      otherColumn
+    };
+
+    return [newItem];
+  }
   private _getItems = (laneColumn?: ILaneColumn) => {
     return Array.from(new Array(this._numberOfItems).keys()).map(i => {
       const location = laneColumn ? laneColumn.name : this._getRandom('location');

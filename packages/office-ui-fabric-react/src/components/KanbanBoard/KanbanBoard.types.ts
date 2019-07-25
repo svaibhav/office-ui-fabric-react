@@ -5,6 +5,7 @@ export interface ILaneColumn {
 }
 export interface IKanbanBoardProps {
   laneColumns: ILaneColumn[];
+  onRenderNewCardPopUp?: () => any;
   onRenderLaneItem?: (item?: any, index?: number) => any;
   onRenderLaneColumn?: (laneColumn: ILaneColumn) => any;
   items?: any[];
@@ -14,6 +15,7 @@ export interface IKanbanBoardProps {
 export interface IKanbanLaneProps {
   laneColumn: ILaneColumn;
   onRenderLaneItem?: (item?: any, index?: number) => any;
+  onRenderNewCardPopUp?: () => any;
   onRenderLaneColumn?: (laneColumn: ILaneColumn) => any;
   items?: any[];
   getMoreLaneItems?: (laneColumn: ILaneColumn) => any[];
