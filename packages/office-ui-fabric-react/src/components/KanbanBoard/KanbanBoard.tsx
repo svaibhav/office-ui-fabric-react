@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IKanbanBoardProps, IKanbanLaneProps, IKanbanLaneState, IKanbanLaneItemProps } from './KanbanBoard.types';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { List } from 'office-ui-fabric-react/lib/List';
+import { css } from 'office-ui-fabric-react';
 import { DefaultButton } from '../Button';
 import {
   DragDropContextProvider,
@@ -12,9 +13,11 @@ import {
   DropTargetConnector,
   DragSourceConnector,
   DragSource,
-  DropTarget
+  DropTarget,
+  XYCoord
 } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { findDOMNode } from 'react-dom';
 
 const classNames = mergeStyleSets({
   kanbanContainer: {
@@ -48,6 +51,13 @@ const classNames = mergeStyleSets({
     backgroundColor: '#AAF1F0',
     borderRadius: 5,
     margin: 1
+  },
+  dragStart: {
+    backgroundColor: 'grey'
+  },
+  onHover: {
+    transform: 'translate3d(0,0,0,)',
+    backgroundColor: 'grey'
   }
 });
 
@@ -55,7 +65,7 @@ const DRAG_TYPE = {
   CARD: 'card'
 };
 
-export class KanbanBoard extends React.PureComponent<IKanbanBoardProps> {
+export class KanbanBoard extends React.Component<IKanbanBoardProps> {
   constructor(props: IKanbanBoardProps) {
     super(props);
   }
@@ -64,7 +74,12 @@ export class KanbanBoard extends React.PureComponent<IKanbanBoardProps> {
       <DragDropContextProvider backend={HTML5Backend}>
         <div className={classNames.kanbanContainer}>
           {this.props.laneColumns.map(laneColumn => (
-            <KanbanLane {...this.props} laneColumn={laneColumn} key={laneColumn.key} />
+            <KanbanLane
+              {...this.props}
+              laneColumn={laneColumn}
+              key={laneColumn.key}
+              items={this.props.getLaneItems && this.props.getLaneItems(laneColumn, this.props.items)}
+            />
           ))}
         </div>
       </DragDropContextProvider>
@@ -77,7 +92,7 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
     super(props);
     this._laneColumnWidth = (this.props.laneColumn.width && this.props.laneColumn.width.toString() + 'px') || this._laneColumnWidth;
     this.state = {
-      items: (this.props.getItems && this.props.getItems(this.props.laneColumn)) || []
+      items: this.props.items || []
     };
   }
   public render(): JSX.Element {
@@ -95,8 +110,8 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
   }
 
   private _fetchItems = () => {
-    const { getItems, laneColumn } = this.props;
-    const newItems = (getItems && getItems(laneColumn)) || [];
+    const { getMoreLaneItems, laneColumn } = this.props;
+    const newItems = (getMoreLaneItems && getMoreLaneItems(laneColumn)) || [];
     this.setState(state => {
       // Important: read `state` instead of `this.state` when updating.
       return { items: [...state.items, ...newItems] };
@@ -169,11 +184,11 @@ class KanbanLaneItem extends React.PureComponent<IKanbanLaneItemProps> {
     super(props);
   }
   public render(): JSX.Element {
-    const { onRenderLaneItem, item, index, connectDragSource, connectDragPreview, connectDropTarget, isDragging } = this.props;
+    const { onRenderLaneItem, item, index, connectDragSource, connectDragPreview, connectDropTarget, isDragging, isOver } = this.props;
     return connectDropTarget(
       connectDragPreview(
         connectDragSource(
-          <div className={classNames.laneItem} style={{ opacity: isDragging ? 0 : 1 }}>
+          <div className={css(classNames.laneItem, isOver ? classNames.onHover : '')} style={{ opacity: isDragging ? 0 : 1 }}>
             {onRenderLaneItem && onRenderLaneItem(item, index)}
           </div>
         )
@@ -191,6 +206,7 @@ const dragSourceSpec: DragSourceSpec<any, any> = {
   endDrag(props: IKanbanLaneItemProps, monitor: DragSourceMonitor, component: React.Component): void {
     if (monitor.didDrop()) {
       console.log('Drag end delete item: ', monitor.getItem().index);
+      console.log('monitor.getItem().destinationIndex: ', monitor.getItem().destinationIndex);
       if (props.parentLaneKey !== monitor.getDropResult().dropTargetParentLaneKey) {
         props.deleteItem(monitor.getItem().index);
       }
@@ -205,10 +221,10 @@ const dropTargetSpec: DropTargetSpec<any> = {
     console.log('Drop event add item: ', props.index);
     if (props.parentLaneKey === monitor.getItem().dragItemParentLaneKey) {
       console.log('Drop event moveitem');
-      props.moveItem(monitor.getItem().index, props.index);
+      props.moveItem(monitor.getItem().index, monitor.getItem().destinationIndex ? monitor.getItem().destinationIndex : props.index);
     } else {
       console.log('Drop event add itme');
-      props.addItem(props.index, draggedItem.dragItem);
+      props.addItem(monitor.getItem().destinationIndex ? monitor.getItem().destinationIndex : props.index, draggedItem.dragItem);
     }
 
     return { dropTargetParentLaneKey: props.parentLaneKey };
@@ -217,6 +233,35 @@ const dropTargetSpec: DropTargetSpec<any> = {
 
   hover(props: IKanbanLaneItemProps, monitor: DropTargetMonitor, component: React.Component): void {
     //console.log("onHover");
+    const item = monitor.getItem();
+    const dragIndex = item.index;
+    const hoverIndex = props.index;
+
+    // Don't replace items with themselves
+    if (dragIndex === hoverIndex) {
+      return;
+    }
+
+    // Determine rectangle on screen
+    const componentNode = findDOMNode(component) as HTMLElement;
+    const hoverBoundingRect = componentNode.getBoundingClientRect();
+
+    // Get vertical middle
+    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+    // Determine mouse position
+    const clientOffset = monitor.getClientOffset();
+
+    // Get pixels to the top
+    const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+
+    if (hoverClientY > hoverMiddleY) {
+      monitor.getItem().destinationIndex = props.index + 1;
+    } else {
+      monitor.getItem().destinationIndex = props.index;
+    }
+
+    console.log('Moing item in hover from ', dragIndex, ' to:  ', hoverIndex);
   }
 };
 
@@ -232,7 +277,8 @@ const DraggableListItem = DragSource(DRAG_TYPE.CARD, dragSourceSpec, collect)(Ka
 
 function collectDropTargetProps(connect: DropTargetConnector, monitor: DropTargetMonitor, props: any): any {
   return {
-    connectDropTarget: connect.dropTarget()
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
   };
 }
 
