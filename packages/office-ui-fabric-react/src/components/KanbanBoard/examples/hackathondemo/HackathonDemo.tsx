@@ -162,6 +162,11 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
   };
 
   private _getItems = (): IItem[] => {
+    const { items } = this.state;
+    if (items) {
+      return items;
+    }
+
     return this._locations.map((location, index) => {
       return {
         key: `item_key_${index}`,
