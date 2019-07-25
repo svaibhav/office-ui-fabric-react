@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IKanbanBoardProps, IKanbanLaneProps, ILaneColumn, IKanbanLaneState } from './KanbanBoard.types';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { List } from 'office-ui-fabric-react/lib/List';
-import { DefaultButton } from '../Button';
+import { DefaultButton, PrimaryButton } from '../Button';
 
 const classNames = mergeStyleSets({
   kanbanContainer: {
@@ -68,11 +68,21 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
         {this._onRenderLaneColumn(this.props.laneColumn)}
         <div className={classNames.laneListWrapper}>
           <List items={this.state.items} onRenderCell={this._onRenderLaneItem} />
+          <PrimaryButton iconProps={{ iconName: 'Add' }} onClick={this._onNewButtonClicked} style={{ margin: 5 }} />
           <DefaultButton primary text={`${this.props.laneColumn.name}`} onClick={this._fetchItems} style={{ margin: 5 }} />
         </div>
       </div>
     );
   }
+
+  private _onNewButtonClicked = () => {
+    const { onRenderNewCardPopUp } = this.props;
+    const newItems = onRenderNewCardPopUp && onRenderNewCardPopUp();
+    this.setState(state => {
+      // Important: read `state` instead of `this.state` when updating.
+      return { items: [...state.items, ...newItems] };
+    });
+  };
 
   private _fetchItems = () => {
     // improve this logic

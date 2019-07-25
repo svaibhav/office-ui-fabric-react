@@ -81,7 +81,12 @@ export class KanbanBoardExample extends React.Component {
   public render() {
     return (
       <div className={classNamesExample.wrapper} data-is-scrollable={true}>
-        <KanbanBoard laneColumns={this._laneColumns} getItems={this._getItems} onRenderLaneItem={this._onRenderLaneItem} />
+        <KanbanBoard
+          laneColumns={this._laneColumns}
+          getItems={this._getItems}
+          onRenderLaneItem={this._onRenderLaneItem}
+          onRenderNewCardPopUp={this._onNewButtonClicked}
+        />
       </div>
     );
   }
@@ -96,6 +101,22 @@ export class KanbanBoardExample extends React.Component {
       })
     );
   };
+
+  private _onNewButtonClicked(): any[] {
+    const location = 'asdas';
+    const color = 'Red';
+    const col = location;
+    const otherColumn = 'value Column' + 10;
+    const newItem = {
+      location,
+      color,
+      col,
+      otherColumn
+    };
+
+    return [newItem];
+  }
+
   private _onRenderLaneItem(item?: IKanbanBoardExampleItem, index?: number) {
     console.log('on render item');
     return (
