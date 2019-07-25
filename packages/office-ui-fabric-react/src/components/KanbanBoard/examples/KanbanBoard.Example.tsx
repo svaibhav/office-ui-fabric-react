@@ -30,7 +30,7 @@ const classNamesExample = mergeStyleSets({
 export class KanbanBoardExample extends React.Component {
   private _laneColumns: ILaneColumn[];
   private _numberOfColumns: number;
-  private _numberOfItems = 3;
+  private _numberOfItems = 1;
   private _colors = ['#05ffb0', '#EA4300', '#959595', '#008877'];
   private _colorCount: number;
   private _locations: string[] = [

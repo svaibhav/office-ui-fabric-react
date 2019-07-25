@@ -105,6 +105,7 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
 
   private _onRenderLaneItem = (item?: any, index?: number): JSX.Element => {
     const { onRenderLaneItem } = this.props;
+    // return <div className={classNames.laneItem}>{onRenderLaneItem && onRenderLaneItem(item, index)}</div>;
     return (
       <DragDroppableListItem
         item={item}
