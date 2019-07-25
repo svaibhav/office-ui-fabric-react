@@ -50,7 +50,6 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     'Philadelphia',
     'Hawaii',
     'San Francisco',
-    'Los Angels',
     'Las Vegas',
     'Denver',
     'New Jersey',
