@@ -90,9 +90,9 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
   private _laneColumnWidth: string = '200px';
   constructor(props: IKanbanLaneProps) {
     super(props);
-    this._laneColumnWidth = (this.props.laneColumn.width && this.props.laneColumn.width.toString() + 'px') || this._laneColumnWidth;
+    this._laneColumnWidth = (props.laneColumn.width && props.laneColumn.width.toString() + 'px') || this._laneColumnWidth;
     this.state = {
-      items: this.props.items || []
+      items: props.items || []
     };
   }
   public render(): JSX.Element {
