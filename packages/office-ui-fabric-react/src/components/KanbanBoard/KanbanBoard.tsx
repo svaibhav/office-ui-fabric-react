@@ -47,10 +47,10 @@ const classNames = mergeStyleSets({
     overflow: 'hidden'
   },
   laneWrapper: {
-    // border: '1px dashed'
-    backgroundColor: '#AAF1F0',
+    // border: '1px solid',
+    backgroundColor: '#E6E6FA',
     borderRadius: 5,
-    margin: 1
+    margin: 5
   },
   dragStart: {
     backgroundColor: 'grey'

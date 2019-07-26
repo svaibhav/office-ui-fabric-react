@@ -4,6 +4,8 @@ import { mergeStyleSets } from '@uifabric/styling';
 import { ILaneColumn } from '../../KanbanBoard.types';
 import { IItem } from './HackathonDemo';
 import { KanbanBoardStateMgr } from '../../KanbanBoardStateMgr';
+import { Label } from 'office-ui-fabric-react/lib/components/Label';
+import { Image, ImageFit } from 'office-ui-fabric-react/lib/components/Image';
 
 interface IKanbanHackthonProps {
   items: IItem[];
@@ -26,7 +28,8 @@ const classNamesExample = mergeStyleSets({
     margin: '5px'
   },
   cardDetails: {
-    padding: '2px 16px'
+    padding: '2px 16px',
+    textAlign: 'center'
   }
 });
 export class KanbanHackthonExample extends React.Component<IKanbanHackthonProps, IKanbanHackthonState> {
@@ -61,13 +64,12 @@ export class KanbanHackthonExample extends React.Component<IKanbanHackthonProps,
 
   private _onRenderLaneItem(item?: IItem, index?: number) {
     return (
-      <div className={classNamesExample.laneItemBorder} style={{ background: '#FCFCFC' }}>
-        <img src={item!.flag} style={{ width: '100%' }} />
-        <div className={classNamesExample.cardDetails}>
-          <h4>
-            <b>{item!.name}</b>
-          </h4>
-        </div>
+      <div className={classNamesExample.laneItemBorder} style={{ background: item!.code, border: '2px solid' }}>
+        <Image src={item!.flag} width={'100%'} height={100} imageFit={ImageFit.cover} />
+        <hr color={'#000'} />
+        <h4>
+          <Label className={classNamesExample.cardDetails}>{item!.name}</Label>
+        </h4>
       </div>
     );
   }
