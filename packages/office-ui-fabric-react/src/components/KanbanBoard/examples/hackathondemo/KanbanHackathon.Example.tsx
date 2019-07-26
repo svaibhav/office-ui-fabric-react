@@ -3,10 +3,12 @@ import { KanbanBoard } from '../../KanbanBoard';
 import { mergeStyleSets } from '@uifabric/styling';
 import { ILaneColumn } from '../../KanbanBoard.types';
 import { IItem } from './HackathonDemo';
+import { KanbanBoardStateMgr } from '../../KanbanBoardStateMgr';
 
 interface IKanbanHackthonProps {
   items: IItem[];
   laneColumns: ILaneColumn[];
+  updatItems: (items: any[]) => void;
 }
 interface IKanbanHackthonState {}
 
@@ -28,10 +30,15 @@ const classNamesExample = mergeStyleSets({
   }
 });
 export class KanbanHackthonExample extends React.Component<IKanbanHackthonProps, IKanbanHackthonState> {
+  private _kanbanBoardStateMgr: KanbanBoardStateMgr;
   constructor(props: IKanbanHackthonProps) {
     super(props);
+    this._kanbanBoardStateMgr = new KanbanBoardStateMgr(props.items!);
   }
 
+  public componentWillUnmount() {
+    this.props.updatItems(this._kanbanBoardStateMgr.getAllItems());
+  }
   public render(): JSX.Element {
     const { laneColumns } = this.props;
     return (
@@ -41,6 +48,7 @@ export class KanbanHackthonExample extends React.Component<IKanbanHackthonProps,
           getLaneItems={this._getLaneItems}
           getMoreLaneItems={this._getLaneItems}
           onRenderLaneItem={this._onRenderLaneItem}
+          kanbanBoardStatemgr={this._kanbanBoardStateMgr}
         />
       </div>
     );

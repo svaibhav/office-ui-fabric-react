@@ -41,7 +41,7 @@ const toggleStyles: Partial<IToggleStyles> = {
 
 export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackathonDemoState> {
   private _root = React.createRef<IDetailsList>();
-  private _locations: { name: string; flag: string }[] = [
+  private _locations: { name: string; flag: string; id: string }[] = [
     {
       name: 'Alabama',
       flag: '//usa.fmcdn.net/data/flags/h80/al.png'
@@ -242,7 +242,9 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       name: 'Wyoming',
       flag: '//usa.fmcdn.net/data/flags/h80/wy.png'
     }
-  ];
+  ].map((item, idx) => {
+    return { id: `index_${idx}`, ...item };
+  });
   private _colors = ['red', 'blue', 'green', 'yellow', 'indigo', 'white', 'pink', 'orange', 'purple', 'violet'];
 
   constructor(props: IHackathonDemoProps) {
@@ -254,6 +256,8 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       items,
       columns
     };
+
+    this.updateItems = this.updateItems.bind(this);
   }
 
   public render(): JSX.Element {
@@ -270,7 +274,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       <div>
         <Toggle label="Kanban mode" inlineLabel checked={isKanbanMode} onChange={this._onChangeCompactMode} styles={toggleStyles} />
         {isKanbanMode ? (
-          <KanbanHackthonExample items={items} laneColumns={laneColumns} />
+          <KanbanHackthonExample items={items} laneColumns={laneColumns} updatItems={this.updateItems} />
         ) : (
           <DetailsList
             componentRef={this._root}
@@ -287,6 +291,11 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
         )}
       </div>
     );
+  }
+
+  private updateItems(items: any[]) {
+    console.log('update items in HackathodDemo');
+    this.setState({ items: items });
   }
 
   private _onChangeCompactMode = () => {
@@ -349,9 +358,10 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       .map((location, index) => {
         return {
           key: `item_key_${index}`,
+          id: `index_${index}`,
           name: location.name,
           flag: location.flag,
-          color: this._colors[Math.floor(Math.random() * this._colors.length)]
+          color: this._colors[Math.floor(Math.random() * this._colors.length)].toUpperCase()
         };
       })
       .sort(this._sortItems);
