@@ -1,3 +1,5 @@
+import { KanbanBoardStateMgr } from './KanbanBoardStateMgr';
+
 export interface ILaneColumn {
   name: string;
   key: string;
@@ -10,6 +12,7 @@ export interface IKanbanBoardProps {
   items?: any[];
   getMoreLaneItems?: (laneColumn: ILaneColumn) => any[];
   getLaneItems?: (laneColumn: ILaneColumn, items?: any[]) => any[] | undefined;
+  kanbanBoardStatemgr: KanbanBoardStateMgr;
 }
 export interface IKanbanLaneProps {
   laneColumn: ILaneColumn;
@@ -17,6 +20,7 @@ export interface IKanbanLaneProps {
   onRenderLaneColumn?: (laneColumn: ILaneColumn) => any;
   items?: any[];
   getMoreLaneItems?: (laneColumn: ILaneColumn) => any[];
+  kanbanBoardStatemgr: KanbanBoardStateMgr;
 }
 export interface IKanbanLaneState {
   items: any[];
@@ -24,14 +28,16 @@ export interface IKanbanLaneState {
 
 export interface IKanbanLaneItemProps {
   onRenderLaneItem?: (item?: any, index?: number) => any;
+  ParentLaneColumn: ILaneColumn;
   item: any;
   index: any;
   connectDragSource?: any;
   connectDropTarget?: any;
   connectDragPreview?: any;
   deleteItem: (index: any) => any;
-  addItem: (index: any, item: any) => void;
-  moveItem: (sourceIndex: any, destinationIndex: any) => void;
+  addItem: (item: any) => void;
+  moveItem: (item: any, sourceCol: any, destinationCol: any) => void;
+  updateLane: () => void;
   isDragging?: boolean;
   isOver?: boolean;
   parentLaneKey: string;

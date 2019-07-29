@@ -3,11 +3,13 @@ import { Toggle, IToggleStyles } from '../../../Toggle';
 import { KanbanHackthonExample } from './KanbanHackathon.Example';
 import { DetailsList, IDetailsList } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ILaneColumn } from '../../KanbanBoard.types';
+import { Image, ImageFit } from 'office-ui-fabric-react/lib/components/Image';
 
 export interface IItem {
   key: string;
   name: string;
   flag: string;
+  code: string;
   color: string;
 }
 
@@ -41,7 +43,7 @@ const toggleStyles: Partial<IToggleStyles> = {
 
 export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackathonDemoState> {
   private _root = React.createRef<IDetailsList>();
-  private _locations: { name: string; flag: string }[] = [
+  private _locations: { name: string; flag: string; id: string }[] = [
     {
       name: 'Alabama',
       flag: '//usa.fmcdn.net/data/flags/h80/al.png'
@@ -195,8 +197,8 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       flag: '//usa.fmcdn.net/data/flags/h80/pa.png'
     },
     {
-      name: 'Rhode Islan',
-      flag: '"//usa.fmcdn.net/data/flags/h80/ri.pn'
+      name: 'Rhode Island',
+      flag: '//usa.fmcdn.net/data/flags/h80/ri.png'
     },
     {
       name: 'South Carolina',
@@ -242,8 +244,21 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       name: 'Wyoming',
       flag: '//usa.fmcdn.net/data/flags/h80/wy.png'
     }
+  ].map((item, idx) => {
+    return { id: `index_${idx}`, ...item };
+  });
+  private _colors = [
+    { code: '#FFA07A', color: 'salmon' },
+    { code: '#AFEEEE', color: 'blue' },
+    { code: '#98FB98', color: 'green' },
+    { code: '#FFD700', color: 'yellow' },
+    { code: '#7B68EE', color: 'indigo' },
+    { code: '#FAEBD7', color: 'white' },
+    { code: '#FFB6C1', color: 'pink' },
+    { code: '#FFA500', color: 'orange' },
+    { code: '#9932CC', color: 'purple' },
+    { code: '#DDA0DD', color: 'violet' }
   ];
-  private _colors = ['red', 'blue', 'green', 'yellow', 'indigo', 'white', 'pink', 'orange', 'purple', 'violet'];
 
   constructor(props: IHackathonDemoProps) {
     super(props);
@@ -254,6 +269,8 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       items,
       columns
     };
+
+    this.updateItems = this.updateItems.bind(this);
   }
 
   public render(): JSX.Element {
@@ -270,13 +287,14 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       <div>
         <Toggle label="Kanban mode" inlineLabel checked={isKanbanMode} onChange={this._onChangeCompactMode} styles={toggleStyles} />
         {isKanbanMode ? (
-          <KanbanHackthonExample items={items} laneColumns={laneColumns} />
+          <KanbanHackthonExample items={items} laneColumns={laneColumns} updatItems={this.updateItems} />
         ) : (
           <DetailsList
             componentRef={this._root}
             items={items}
             groups={groups}
             columns={columns}
+            onRenderItemColumn={this._renderItemColumn}
             ariaLabelForSelectAllCheckbox="Toggle selection for all items"
             ariaLabelForSelectionColumn="Toggle selection"
             checkButtonAriaLabel="Row checkbox"
@@ -289,6 +307,11 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     );
   }
 
+  private updateItems(items: any[]) {
+    console.log('update items in HackathodDemo');
+    this.setState({ items: items });
+  }
+
   private _onChangeCompactMode = () => {
     const { isKanbanMode } = this.state;
     this.setState({
@@ -296,10 +319,21 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     });
   };
 
+  private _renderItemColumn = (item: IItem, index: number, column: IColumn): JSX.Element => {
+    const fieldValue = item[column.key];
+    if (column.key === 'name') {
+      return <strong style={{ fontSize: 14 }}>{fieldValue}</strong>;
+    } else if (column.key === 'flag') {
+      return <Image src={fieldValue} width={120} height={80} imageFit={ImageFit.cover} />;
+    }
+    return <span>{fieldValue}</span>;
+  };
+
   private _bootstrapData = () => {
     const items: IItem[] = this._getItems();
     const columns: IColumn[] = [
       { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200 },
+      { key: 'flag', name: 'Flag', fieldName: 'flag', minWidth: 100, maxWidth: 200 },
       { key: 'color', name: 'Color', fieldName: 'color', minWidth: 100, maxWidth: 200 }
     ];
     return { items, columns };
@@ -347,11 +381,14 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
 
     return this._locations
       .map((location, index) => {
+        const { name, flag } = location;
+        const { color, code } = this._colors[Math.floor(Math.random() * this._colors.length)];
         return {
           key: `item_key_${index}`,
-          name: location.name,
-          flag: location.flag,
-          color: this._colors[Math.floor(Math.random() * this._colors.length)]
+          name,
+          flag,
+          code,
+          color: color.toUpperCase()
         };
       })
       .sort(this._sortItems);
