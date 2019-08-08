@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScrollablePaneDefaultExample } from './examples/ScrollablePane.Default.Example';
 
 import { IDocPageProps } from '../../common/DocPage.types';
-import { KanbanBoardExample } from '../KanbanBoard/examples/KanbanBoard.Example';
+//import { KanbanBoardExample } from '../KanbanBoard/examples/KanbanBoard.Example';
 
 const ScrollablePaneDefaultExampleCode = require('!raw-loader!office-ui-fabric-react/src/components/ScrollablePane/examples/ScrollablePane.Default.Example.tsx') as string;
 const ScrollablePaneDetailsListExampleCode = require('!raw-loader!office-ui-fabric-react/src/components/ScrollablePane/examples/ScrollablePane.DetailsList.Example.tsx') as string;
@@ -27,7 +27,7 @@ export const ScrollablePanePageProps: IDocPageProps = {
       title: 'DetailsList Locked Header',
       code: ScrollablePaneDetailsListExampleCode,
       codepenJS: ScrollablePaneDetailsListExampleCodepen,
-      view: <KanbanBoardExample />,
+      view: <ScrollablePaneDefaultExample />,
       isScrollable: false
     }
   ],
