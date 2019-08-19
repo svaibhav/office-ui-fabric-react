@@ -81,171 +81,171 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     {
       name: 'Georgia',
       flag: '//usa.fmcdn.net/data/flags/h80/ga.png'
-    },
-    {
-      name: 'Hawaii',
-      flag: '//usa.fmcdn.net/data/flags/h80/hi.png'
-    },
-    {
-      name: 'Idaho',
-      flag: '//usa.fmcdn.net/data/flags/h80/id.png'
-    },
-    {
-      name: 'Illinois',
-      flag: '//usa.fmcdn.net/data/flags/h80/il.png'
-    },
-    {
-      name: 'Indiana',
-      flag: '//usa.fmcdn.net/data/flags/h80/in.png'
-    },
-    {
-      name: 'Iowa',
-      flag: '//usa.fmcdn.net/data/flags/h80/ia.png'
-    },
-    {
-      name: 'Kansas',
-      flag: '//usa.fmcdn.net/data/flags/h80/ks.png'
-    },
-    {
-      name: 'Kentucky',
-      flag: '//usa.fmcdn.net/data/flags/h80/ky.png'
-    },
-    {
-      name: 'Louisiana',
-      flag: '//usa.fmcdn.net/data/flags/h80/la.png'
-    },
-    {
-      name: 'Maine',
-      flag: '//usa.fmcdn.net/data/flags/h80/me.png'
-    },
-    {
-      name: 'Maryland',
-      flag: '//usa.fmcdn.net/data/flags/h80/md.png'
-    },
-    {
-      name: 'Massachusetts',
-      flag: '//usa.fmcdn.net/data/flags/h80/ma.png'
-    },
-    {
-      name: 'Michigan',
-      flag: '//usa.fmcdn.net/data/flags/h80/mi.png'
-    },
-    {
-      name: 'Minnesota',
-      flag: '//usa.fmcdn.net/data/flags/h80/mn.png'
-    },
-    {
-      name: 'Mississippi',
-      flag: '//usa.fmcdn.net/data/flags/h80/ms.png'
-    },
-    {
-      name: 'Missouri',
-      flag: '//usa.fmcdn.net/data/flags/h80/mo.png'
-    },
-    {
-      name: 'Montana',
-      flag: '//usa.fmcdn.net/data/flags/h80/mt.png'
-    },
-    {
-      name: 'Nebraska',
-      flag: '//usa.fmcdn.net/data/flags/h80/ne.png'
-    },
-    {
-      name: 'Nevada',
-      flag: '//usa.fmcdn.net/data/flags/h80/nv.png'
-    },
-    {
-      name: 'New Hampshire',
-      flag: '//usa.fmcdn.net/data/flags/h80/nh.png'
-    },
-    {
-      name: 'New Jersey',
-      flag: '//usa.fmcdn.net/data/flags/h80/nj.png'
-    },
-    {
-      name: 'New Mexico',
-      flag: '//usa.fmcdn.net/data/flags/h80/nm.png'
-    },
-    {
-      name: 'New York',
-      flag: '//usa.fmcdn.net/data/flags/h80/ny.png'
-    },
-    {
-      name: 'North Carolina',
-      flag: '//usa.fmcdn.net/data/flags/h80/nc.png'
-    },
-    {
-      name: 'North Dakota',
-      flag: '//usa.fmcdn.net/data/flags/h80/nd.png'
-    },
-    {
-      name: 'Ohio',
-      flag: '//usa.fmcdn.net/data/flags/h80/oh.png'
-    },
-    {
-      name: 'Oklahoma',
-      flag: '//usa.fmcdn.net/data/flags/h80/ok.png'
-    },
-    {
-      name: 'Oregon',
-      flag: '//usa.fmcdn.net/data/flags/h80/or.png'
-    },
-    {
-      name: 'Pennsylvania',
-      flag: '//usa.fmcdn.net/data/flags/h80/pa.png'
-    },
-    {
-      name: 'Rhode Islan',
-      flag: '"//usa.fmcdn.net/data/flags/h80/ri.pn'
-    },
-    {
-      name: 'South Carolina',
-      flag: '//usa.fmcdn.net/data/flags/h80/sc.png'
-    },
-    {
-      name: 'South Dakota',
-      flag: '//usa.fmcdn.net/data/flags/h80/sd.png'
-    },
-    {
-      name: 'Tennessee',
-      flag: '//usa.fmcdn.net/data/flags/h80/tn.png'
-    },
-    {
-      name: 'Texas',
-      flag: '//usa.fmcdn.net/data/flags/h80/tx.png'
-    },
-    {
-      name: 'Utah',
-      flag: '//usa.fmcdn.net/data/flags/h80/ut.png'
-    },
-    {
-      name: 'Vermont',
-      flag: '//usa.fmcdn.net/data/flags/h80/vt.png'
-    },
-    {
-      name: 'Virginia',
-      flag: '//usa.fmcdn.net/data/flags/h80/va.png'
-    },
-    {
-      name: 'Washington',
-      flag: '//usa.fmcdn.net/data/flags/h80/wa.png'
-    },
-    {
-      name: 'West Virginia',
-      flag: '//usa.fmcdn.net/data/flags/h80/wv.png'
-    },
-    {
-      name: 'Wisconsin',
-      flag: '//usa.fmcdn.net/data/flags/h80/wi.png'
-    },
-    {
-      name: 'Wyoming',
-      flag: '//usa.fmcdn.net/data/flags/h80/wy.png'
     }
+    // {
+    //   name: 'Hawaii',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/hi.png'
+    // },
+    // {
+    //   name: 'Idaho',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/id.png'
+    // },
+    // {
+    //   name: 'Illinois',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/il.png'
+    // },
+    // {
+    //   name: 'Indiana',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/in.png'
+    // },
+    // {
+    //   name: 'Iowa',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ia.png'
+    // },
+    // {
+    //   name: 'Kansas',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ks.png'
+    // },
+    // {
+    //   name: 'Kentucky',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ky.png'
+    // },
+    // {
+    //   name: 'Louisiana',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/la.png'
+    // },
+    // {
+    //   name: 'Maine',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/me.png'
+    // },
+    // {
+    //   name: 'Maryland',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/md.png'
+    // },
+    // {
+    //   name: 'Massachusetts',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ma.png'
+    // },
+    // {
+    //   name: 'Michigan',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/mi.png'
+    // },
+    // {
+    //   name: 'Minnesota',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/mn.png'
+    // },
+    // {
+    //   name: 'Mississippi',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ms.png'
+    // },
+    // {
+    //   name: 'Missouri',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/mo.png'
+    // },
+    // {
+    //   name: 'Montana',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/mt.png'
+    // },
+    // {
+    //   name: 'Nebraska',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ne.png'
+    // },
+    // {
+    //   name: 'Nevada',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/nv.png'
+    // },
+    // {
+    //   name: 'New Hampshire',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/nh.png'
+    // },
+    // {
+    //   name: 'New Jersey',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/nj.png'
+    // },
+    // {
+    //   name: 'New Mexico',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/nm.png'
+    // },
+    // {
+    //   name: 'New York',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ny.png'
+    // },
+    // {
+    //   name: 'North Carolina',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/nc.png'
+    // },
+    // {
+    //   name: 'North Dakota',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/nd.png'
+    // },
+    // {
+    //   name: 'Ohio',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/oh.png'
+    // },
+    // {
+    //   name: 'Oklahoma',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ok.png'
+    // },
+    // {
+    //   name: 'Oregon',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/or.png'
+    // },
+    // {
+    //   name: 'Pennsylvania',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/pa.png'
+    // },
+    // {
+    //   name: 'Rhode Islan',
+    //   flag: '"//usa.fmcdn.net/data/flags/h80/ri.pn'
+    // },
+    // {
+    //   name: 'South Carolina',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/sc.png'
+    // },
+    // {
+    //   name: 'South Dakota',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/sd.png'
+    // },
+    // {
+    //   name: 'Tennessee',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/tn.png'
+    // },
+    // {
+    //   name: 'Texas',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/tx.png'
+    // },
+    // {
+    //   name: 'Utah',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/ut.png'
+    // },
+    // {
+    //   name: 'Vermont',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/vt.png'
+    // },
+    // {
+    //   name: 'Virginia',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/va.png'
+    // },
+    // {
+    //   name: 'Washington',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/wa.png'
+    // },
+    // {
+    //   name: 'West Virginia',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/wv.png'
+    // },
+    // {
+    //   name: 'Wisconsin',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/wi.png'
+    // },
+    // {
+    //   name: 'Wyoming',
+    //   flag: '//usa.fmcdn.net/data/flags/h80/wy.png'
+    // }
   ].map((item, idx) => {
     return { id: `index_${idx}`, ...item };
   });
-  private _colors = ['red', 'blue', 'green', 'yellow', 'indigo', 'white', 'pink', 'orange', 'purple', 'violet'];
+  private _colors = ['RED', 'BLUE', 'GREEN', 'YELLOW']; //, 'indigo', 'white', 'pink', 'orange', 'purple', 'violet'];
 
   constructor(props: IHackathonDemoProps) {
     super(props);
@@ -321,7 +321,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     let _group: string = '';
     let _startIndex: number = 0;
     items.forEach((item, index) => {
-      if (!_group || _group !== item.color) {
+      if (!_group || _group.toUpperCase() !== item.color.toUpperCase()) {
         if (_group) {
           groups.push({
             key: `group_key_${index}`,
@@ -332,7 +332,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
           _startIndex = index;
         }
         _count = 1;
-        _group = item.color;
+        _group = item.color.toUpperCase();
       } else {
         _count++;
       }

@@ -7,7 +7,7 @@ export class KanbanBoardStateMgr {
   }
 
   public getLaneItems = (laneColumn: ILaneColumn) => {
-    return this._items.filter(item => item.color.toUpperCase() === laneColumn.name);
+    return this._items.filter(item => item.color.toUpperCase() === laneColumn.name.toUpperCase());
   };
 
   public getAllItems() {
