@@ -341,7 +341,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       key: `group_key_last`,
       startIndex: _startIndex,
       count: _count,
-      name: items[items.length - 1].color.toUpperCase()
+      name: items[items.length - 1].color
     });
     return groups;
   };

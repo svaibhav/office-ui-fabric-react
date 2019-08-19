@@ -69,6 +69,10 @@ export class KanbanBoard extends React.Component<IKanbanBoardProps> {
   constructor(props: IKanbanBoardProps) {
     super(props);
   }
+
+  private _update() {
+    this.forceUpdate();
+  }
   public render(): JSX.Element {
     return (
       <DragDropContextProvider backend={HTML5Backend}>
@@ -80,6 +84,7 @@ export class KanbanBoard extends React.Component<IKanbanBoardProps> {
               key={laneColumn.key}
               //  items={this.props.getLaneItems && this.props.getLaneItems(laneColumn, this.props.items)}
               kanbanBoardStatemgr={this.props.kanbanBoardStatemgr}
+              updateParent={this._update}
             />
           ))}
         </div>
@@ -127,8 +132,8 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
         item={item}
         index={index}
         onRenderLaneItem={onRenderLaneItem}
-        addItem={this._addItem}
-        deleteItem={this._deleteItem}
+        //    addItem={this._addItem}
+        // deleteItem={this._deleteItem}
         moveItem={this._moveItem}
         parentLaneKey={this.props.laneColumn.key}
         ParentLaneColumn={laneColumn}
@@ -146,25 +151,27 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
     );
   }
 
-  private _deleteItem = (itemId: any) => {
-    const { kanbanBoardStatemgr, laneColumn } = this.props;
-    kanbanBoardStatemgr.deleteItem(itemId);
-    this.setState(state => {
-      // Important: read `state` instead of `this.state` when updating.
-      return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
-    });
-    // const items: any[] = this.state.items.slice();
-    // items.splice(index, 1);
-    // this.setState({ items: items });
-    // // this.setState(state => {
-    // //   // Important: read `state` instead of `this.state` when updating.
-    // //   return { items: items };
-    // // });
-  };
+  // private _deleteItem = (itemId: any) => {
+  //   const { kanbanBoardStatemgr, laneColumn } = this.props;
+  //   kanbanBoardStatemgr.deleteItem(itemId);
+  //   this.setState(state => {
+  //     // Important: read `state` instead of `this.state` when updating.
+  //     return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
+  //   });
+  //   // const items: any[] = this.state.items.slice();
+  //   // items.splice(index, 1);
+  //   // this.setState({ items: items });
+  //   // // this.setState(state => {
+  //   // //   // Important: read `state` instead of `this.state` when updating.
+  //   // //   return { items: items };
+  //   // // });
+  // };
 
-  private _moveItem = (itemId: any, sourceCol: any, destinationCol: any): void => {
+  private _moveItem = (itemId: any, sourceCol: any, destinationCol: any, sourceInx: any, destInx: any): void => {
     const { kanbanBoardStatemgr, laneColumn } = this.props;
-    kanbanBoardStatemgr.moveItem(itemId, sourceCol, destinationCol);
+
+    kanbanBoardStatemgr.moveItem(itemId, sourceCol, destinationCol, sourceInx, destInx);
+
     this.setState(state => {
       // Important: read `state` instead of `this.state` when updating.
       return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
@@ -185,16 +192,16 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
     // });
   };
 
-  private _addItem = (item: any) => {
-    const { kanbanBoardStatemgr, laneColumn } = this.props;
-    kanbanBoardStatemgr.addItem(item);
-    // const items = this.state.items.slice();
-    // items.splice(index, 0, item);
-    this.setState(state => {
-      // Important: read `state` instead of `this.state` when updating.
-      return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
-    });
-  };
+  // private _addItem = (item: any) => {
+  //   const { kanbanBoardStatemgr, laneColumn } = this.props;
+  //   kanbanBoardStatemgr.addItem(item);
+  //   // const items = this.state.items.slice();
+  //   // items.splice(index, 0, item);
+  //   this.setState(state => {
+  //     // Important: read `state` instead of `this.state` when updating.
+  //     return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
+  //   });
+  // };
 
   private _updateLane = () => {
     const { kanbanBoardStatemgr, laneColumn } = this.props;
@@ -259,7 +266,9 @@ const dropTargetSpec: DropTargetSpec<any> = {
     props.moveItem(
       monitor.getItem().dragItem,
       monitor.getItem().dragItemParentLane.name.toUpperCase(),
-      props.ParentLaneColumn.name.toUpperCase()
+      props.ParentLaneColumn.name.toUpperCase(),
+      monitor.getItem().index,
+      props.index
     );
     // } else {
     //   console.log('Drop event add itme');

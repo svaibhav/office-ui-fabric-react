@@ -21,6 +21,7 @@ export interface IKanbanLaneProps {
   items?: any[];
   getMoreLaneItems?: (laneColumn: ILaneColumn) => any[];
   kanbanBoardStatemgr: KanbanBoardStateMgr;
+  updateParent: () => void;
 }
 export interface IKanbanLaneState {
   items: any[];
@@ -34,9 +35,9 @@ export interface IKanbanLaneItemProps {
   connectDragSource?: any;
   connectDropTarget?: any;
   connectDragPreview?: any;
-  deleteItem: (index: any) => any;
-  addItem: (item: any) => void;
-  moveItem: (item: any, sourceCol: any, destinationCol: any) => void;
+  deleteItem?: (index: any) => any;
+  addItem?: (item: any) => void;
+  moveItem: (item: any, sourceCol: any, destinationCol: any, sourceInx: any, destInx: any) => void;
   updateLane: () => void;
   isDragging?: boolean;
   isOver?: boolean;

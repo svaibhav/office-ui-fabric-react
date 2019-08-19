@@ -19,6 +19,7 @@
     "skipLibCheck": true,
     "typeRoots": ["../../node_modules/@types", "../../typings"],
     "types": ["jest", "webpack-env", "custom-global"],
+    "downlevelIteration": true,
     "paths": {
       "office-ui-fabric-react/lib/*": ["./src/*"],
       "office-ui-fabric-react": ["./src"]
