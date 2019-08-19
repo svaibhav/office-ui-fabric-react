@@ -7,7 +7,7 @@ export class KanbanBoardStateMgr {
   }
 
   public getLaneItems = (laneColumn: ILaneColumn) => {
-    return this._items.filter(item => item.color.toUpperCase() === laneColumn.name.toUpperCase());
+    return this._items.filter(item => item.population === laneColumn.name);
   };
 
   public getAllItems() {
@@ -21,7 +21,7 @@ export class KanbanBoardStateMgr {
 
   public moveItem = (item: any, sourceCol: any, destinationCol: any): void => {
     const index = this.findWithAttr(this._items, 'id', item.id);
-    this._items[index].color = destinationCol.toUpperCase();
+    this._items[index].population = destinationCol;
   };
 
   public addItem = (item: any) => {
@@ -29,7 +29,7 @@ export class KanbanBoardStateMgr {
   };
 
   private findWithAttr(array: any[], attr: string, value: any) {
-    for (var i = 0; i < array.length; i += 1) {
+    for (let i = 0; i < array.length; i += 1) {
       if (array[i][attr] === value) {
         return i;
       }

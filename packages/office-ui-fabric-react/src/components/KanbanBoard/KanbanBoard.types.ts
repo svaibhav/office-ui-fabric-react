@@ -21,6 +21,7 @@ export interface IKanbanLaneProps {
   items?: any[];
   getMoreLaneItems?: (laneColumn: ILaneColumn) => any[];
   kanbanBoardStatemgr: KanbanBoardStateMgr;
+  fetchMore?: boolean;
 }
 export interface IKanbanLaneState {
   items: any[];

@@ -98,13 +98,13 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
   }
   public render(): JSX.Element {
     const laneWrapperStyle = { width: this._laneColumnWidth };
-    const { laneColumn } = this.props;
+    const { laneColumn, fetchMore } = this.props;
     return (
       <div style={laneWrapperStyle} className={classNames.laneWrapper}>
         {this._onRenderLaneColumn()}
         <div className={classNames.laneListWrapper}>
           <List items={this.state.items} onRenderCell={this._onRenderLaneItem} />
-          <DefaultButton primary text={`${laneColumn.name}`} onClick={this._fetchItems} style={{ margin: 5 }} />
+          {fetchMore && <DefaultButton primary text={`${laneColumn.name}`} onClick={this._fetchItems} style={{ margin: 5 }} />}
         </div>
       </div>
     );

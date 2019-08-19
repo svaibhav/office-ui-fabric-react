@@ -56,7 +56,7 @@ export class KanbanHackthonExample extends React.Component<IKanbanHackthonProps,
 
   private _getLaneItems = (laneColumn: ILaneColumn) => {
     const { items } = this.props;
-    return items.filter(item => item.color.toUpperCase() === laneColumn.name.toUpperCase());
+    return items.filter(item => item.population === laneColumn.name);
   };
 
   private _onRenderLaneItem(item?: IItem, index?: number) {

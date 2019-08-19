@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ILaneColumn } from '../KanbanBoard.types';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { KanbanBoard } from '../KanbanBoard';
+import { KanbanBoardStateMgr } from '../KanbanBoardStateMgr';
 
 interface IKanbanBoardExampleItem {
   col: string;
@@ -59,6 +60,7 @@ export class KanbanBoardExample extends React.Component {
     'Houston'
   ];
   private _locationCount: number;
+  private _kanbanBoardStateMgr: KanbanBoardStateMgr;
   constructor(props: any) {
     super(props);
     this._colorCount = this._colors.length;
@@ -76,6 +78,7 @@ export class KanbanBoardExample extends React.Component {
     return (
       <div className={classNamesExample.wrapper} data-is-scrollable={true}>
         <KanbanBoard
+          kanbanBoardStatemgr={this._kanbanBoardStateMgr}
           laneColumns={this._laneColumns}
           items={this._getInitialItems()}
           getLaneItems={this._getLaneItems}

@@ -3,16 +3,17 @@ import { Toggle, IToggleStyles } from '../../../Toggle';
 import { KanbanHackthonExample } from './KanbanHackathon.Example';
 import { DetailsList, IDetailsList } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ILaneColumn } from '../../KanbanBoard.types';
+import { Image, ImageFit } from 'office-ui-fabric-react/lib/components/Image';
 
 export interface IItem {
   key: string;
   name: string;
   flag: string;
-  color: string;
+  population: string;
 }
 
 interface IColumn {
-  key: string;
+  key: 'key' | 'name' | 'flag' | 'population';
   name: string;
   fieldName: string;
   minWidth: number;
@@ -41,211 +42,262 @@ const toggleStyles: Partial<IToggleStyles> = {
 
 export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackathonDemoState> {
   private _root = React.createRef<IDetailsList>();
-  private _locations: { name: string; flag: string; id: string }[] = [
+  private _locations: { name: string; flag: string; id: string; population: string }[] = [
     {
       name: 'Alabama',
+      population: '4M_5M',
       flag: '//usa.fmcdn.net/data/flags/h80/al.png'
     },
     {
       name: 'Alaska',
+      population: '0M_1M',
       flag: '//usa.fmcdn.net/data/flags/h80/ak.png'
     },
     {
       name: 'Arizona',
+      population: '7M_9M',
       flag: '//usa.fmcdn.net/data/flags/h80/az.png'
     },
     {
       name: 'Arkansas',
+      population: '3M_4M',
       flag: '//usa.fmcdn.net/data/flags/h80/ar.png'
     },
     {
       name: 'California',
+      population: 'GT_9M',
       flag: '//usa.fmcdn.net/data/flags/h80/ca.png'
     },
     {
       name: 'Colorado',
+      population: '5M_6M',
       flag: '//usa.fmcdn.net/data/flags/h80/co.png'
     },
     {
       name: 'Connecticut',
+      population: '3M_4M',
       flag: '//usa.fmcdn.net/data/flags/h80/ct.png'
     },
     {
       name: 'Delaware',
+      population: '0M_1M',
       flag: '//usa.fmcdn.net/data/flags/h80/de.png'
     },
     {
       name: 'Florida',
+      population: 'GT_9M',
       flag: '//usa.fmcdn.net/data/flags/h80/fl.png'
     },
     {
       name: 'Georgia',
+      population: 'GT_9M',
       flag: '//usa.fmcdn.net/data/flags/h80/ga.png'
+    },
+    {
+      name: 'Hawaii',
+      population: '1M_2M',
+      flag: '//usa.fmcdn.net/data/flags/h80/hi.png'
+    },
+    {
+      name: 'Idaho',
+      population: '1M_2M',
+      flag: '//usa.fmcdn.net/data/flags/h80/id.png'
+    },
+    {
+      name: 'Illinois',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/il.png'
+    },
+    {
+      name: 'Indiana',
+      population: '6M_7M',
+      flag: '//usa.fmcdn.net/data/flags/h80/in.png'
     }
-    // {
-    //   name: 'Hawaii',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/hi.png'
-    // },
-    // {
-    //   name: 'Idaho',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/id.png'
-    // },
-    // {
-    //   name: 'Illinois',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/il.png'
-    // },
-    // {
-    //   name: 'Indiana',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/in.png'
-    // },
-    // {
-    //   name: 'Iowa',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ia.png'
-    // },
-    // {
-    //   name: 'Kansas',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ks.png'
-    // },
-    // {
-    //   name: 'Kentucky',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ky.png'
-    // },
-    // {
-    //   name: 'Louisiana',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/la.png'
-    // },
-    // {
-    //   name: 'Maine',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/me.png'
-    // },
-    // {
-    //   name: 'Maryland',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/md.png'
-    // },
-    // {
-    //   name: 'Massachusetts',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ma.png'
-    // },
-    // {
-    //   name: 'Michigan',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/mi.png'
-    // },
-    // {
-    //   name: 'Minnesota',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/mn.png'
-    // },
-    // {
-    //   name: 'Mississippi',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ms.png'
-    // },
-    // {
-    //   name: 'Missouri',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/mo.png'
-    // },
-    // {
-    //   name: 'Montana',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/mt.png'
-    // },
-    // {
-    //   name: 'Nebraska',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ne.png'
-    // },
-    // {
-    //   name: 'Nevada',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/nv.png'
-    // },
-    // {
-    //   name: 'New Hampshire',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/nh.png'
-    // },
-    // {
-    //   name: 'New Jersey',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/nj.png'
-    // },
-    // {
-    //   name: 'New Mexico',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/nm.png'
-    // },
-    // {
-    //   name: 'New York',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ny.png'
-    // },
-    // {
-    //   name: 'North Carolina',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/nc.png'
-    // },
-    // {
-    //   name: 'North Dakota',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/nd.png'
-    // },
-    // {
-    //   name: 'Ohio',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/oh.png'
-    // },
-    // {
-    //   name: 'Oklahoma',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ok.png'
-    // },
-    // {
-    //   name: 'Oregon',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/or.png'
-    // },
-    // {
-    //   name: 'Pennsylvania',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/pa.png'
-    // },
-    // {
-    //   name: 'Rhode Islan',
-    //   flag: '"//usa.fmcdn.net/data/flags/h80/ri.pn'
-    // },
-    // {
-    //   name: 'South Carolina',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/sc.png'
-    // },
-    // {
-    //   name: 'South Dakota',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/sd.png'
-    // },
-    // {
-    //   name: 'Tennessee',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/tn.png'
-    // },
-    // {
-    //   name: 'Texas',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/tx.png'
-    // },
-    // {
-    //   name: 'Utah',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/ut.png'
-    // },
-    // {
-    //   name: 'Vermont',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/vt.png'
-    // },
-    // {
-    //   name: 'Virginia',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/va.png'
-    // },
-    // {
-    //   name: 'Washington',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/wa.png'
-    // },
-    // {
-    //   name: 'West Virginia',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/wv.png'
-    // },
-    // {
-    //   name: 'Wisconsin',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/wi.png'
-    // },
-    // {
-    //   name: 'Wyoming',
-    //   flag: '//usa.fmcdn.net/data/flags/h80/wy.png'
-    // }
+    /*
+    {
+      name: 'Iowa',
+      population: '3M_4M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ia.png'
+    },
+    {
+      name: 'Kansas',
+      population: '2M_3M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ks.png'
+    },
+    {
+      name: 'Kentucky',
+      population: '4M_5M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ky.png'
+    },
+    {
+      name: 'Louisiana',
+      population: '4M_5M',
+      flag: '//usa.fmcdn.net/data/flags/h80/la.png'
+    },
+    {
+      name: 'Maine',
+      population: '1M_2M',
+      flag: '//usa.fmcdn.net/data/flags/h80/me.png'
+    },
+    {
+      name: 'Maryland',
+      flag: '//usa.fmcdn.net/data/flags/h80/md.png'
+    },
+    {
+      name: 'Massachusetts',
+      population: '6M_7M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ma.png'
+    },
+    {
+      name: 'Michigan',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/mi.png'
+    },
+    {
+      name: 'Minnesota',
+      population: '5M_6M',
+      flag: '//usa.fmcdn.net/data/flags/h80/mn.png'
+    },
+    {
+      name: 'Mississippi',
+      population: '2M_3M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ms.png'
+    },
+    {
+      name: 'Missouri',
+      population: '6M_7M',
+      flag: '//usa.fmcdn.net/data/flags/h80/mo.png'
+    },
+    {
+      name: 'Montana',
+      population: '1M_2M',
+      flag: '//usa.fmcdn.net/data/flags/h80/mt.png'
+    },
+    {
+      name: 'Nebraska',
+      population: '1M_2M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ne.png'
+    },
+    {
+      name: 'Nevada',
+      population: '2M_3M',
+      flag: '//usa.fmcdn.net/data/flags/h80/nv.png'
+    },
+    {
+      name: 'New Hampshire',
+      population: '1M_2M',
+      flag: '//usa.fmcdn.net/data/flags/h80/nh.png'
+    },
+    {
+      name: 'New Jersey',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/nj.png'
+    },
+    {
+      name: 'New Mexico',
+      population: '2M_3M',
+      flag: '//usa.fmcdn.net/data/flags/h80/nm.png'
+    },
+    {
+      name: 'New York',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ny.png'
+    },
+    {
+      name: 'North Carolina',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/nc.png'
+    },
+    {
+      name: 'North Dakota',
+      population: '0M_1M',
+      flag: '//usa.fmcdn.net/data/flags/h80/nd.png'
+    },
+    {
+      name: 'Ohio',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/oh.png'
+    },
+    {
+      name: 'Oklahoma',
+      population: '3M_4M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ok.png'
+    },
+    {
+      name: 'Oregon',
+      population: '4M_5M',
+      flag: '//usa.fmcdn.net/data/flags/h80/or.png'
+    },
+    {
+      name: 'Pennsylvania',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/pa.png'
+    },
+    {
+      name: 'Rhode Island',
+      population: '1M_2M',
+      flag: '"//usa.fmcdn.net/data/flags/h80/ri.pn'
+    },
+    {
+      name: 'South Carolina',
+      population: '5M_6M',
+      flag: '//usa.fmcdn.net/data/flags/h80/sc.png'
+    },
+    {
+      name: 'South Dakota',
+      population: '0M_1M',
+      flag: '//usa.fmcdn.net/data/flags/h80/sd.png'
+    },
+    {
+      name: 'Tennessee',
+      population: '6M_7M',
+      flag: '//usa.fmcdn.net/data/flags/h80/tn.png'
+    },
+    {
+      name: 'Texas',
+      population: 'GT_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/tx.png'
+    },
+    {
+      name: 'Utah',
+      population: '3M_4M',
+      flag: '//usa.fmcdn.net/data/flags/h80/ut.png'
+    },
+    {
+      name: 'Vermont',
+      population: '0M_1M',
+      flag: '//usa.fmcdn.net/data/flags/h80/vt.png'
+    },
+    {
+      name: 'Virginia',
+      population: '7M_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/va.png'
+    },
+    {
+      name: 'Washington',
+      population: '7M_9M',
+      flag: '//usa.fmcdn.net/data/flags/h80/wa.png'
+    },
+    {
+      name: 'West Virginia',
+      population: '1M_2M',
+      flag: '//usa.fmcdn.net/data/flags/h80/wv.png'
+    },
+    {
+      name: 'Wisconsin',
+      population: '5M_6M',
+      flag: '//usa.fmcdn.net/data/flags/h80/wi.png'
+    },
+    {
+      name: 'Wyoming',
+      population: '0M_1M',
+      flag: '//usa.fmcdn.net/data/flags/h80/wy.png'
+    } //*/
   ].map((item, idx) => {
     return { id: `index_${idx}`, ...item };
   });
-  private _colors = ['RED', 'BLUE', 'GREEN', 'YELLOW']; //, 'indigo', 'white', 'pink', 'orange', 'purple', 'violet'];
+  // private _colors = ['RED', 'BLUE', 'GREEN', 'YELLOW']; //*/, 'INDIGO', 'WHITE', 'PINK', 'ORANGE', 'PURPLE', 'VIOLET'];
+  // private _colors = ['0M_1M', '1M-2M', '2M-3M', '3M-4M', '4M-5M', '5M-6M', '6M-7M', '7M-8M', '8M-9M', '9M-10M', 'GT_9M'];
 
   constructor(props: IHackathonDemoProps) {
     super(props);
@@ -281,6 +333,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
             items={items}
             groups={groups}
             columns={columns}
+            onRenderItemColumn={this._renderItemColumn}
             ariaLabelForSelectAllCheckbox="Toggle selection for all items"
             ariaLabelForSelectionColumn="Toggle selection"
             checkButtonAriaLabel="Row checkbox"
@@ -305,11 +358,21 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     });
   };
 
+  private _renderItemColumn = (item: IItem, index: number, column: IColumn): JSX.Element => {
+    const fieldValue = item[column.key];
+    if (column.key === 'name') {
+      return <strong style={{ fontSize: 14 }}>{fieldValue}</strong>;
+    } else if (column.key === 'flag') {
+      return <Image src={fieldValue} width={120} height={80} imageFit={ImageFit.cover} />;
+    }
+    return <span>{fieldValue}</span>;
+  };
+
   private _bootstrapData = () => {
     const items: IItem[] = this._getItems();
     const columns: IColumn[] = [
       { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200 },
-      { key: 'color', name: 'Color', fieldName: 'color', minWidth: 100, maxWidth: 200 }
+      { key: 'flag', name: 'Flag', fieldName: 'flag', minWidth: 100, maxWidth: 200 }
     ];
     return { items, columns };
   };
@@ -321,18 +384,18 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     let _group: string = '';
     let _startIndex: number = 0;
     items.forEach((item, index) => {
-      if (!_group || _group.toUpperCase() !== item.color.toUpperCase()) {
+      if (!_group || _group !== item.population) {
         if (_group) {
           groups.push({
             key: `group_key_${index}`,
             startIndex: _startIndex,
             count: _count,
-            name: _group.toUpperCase()
+            name: _group
           });
           _startIndex = index;
         }
         _count = 1;
-        _group = item.color.toUpperCase();
+        _group = item.population;
       } else {
         _count++;
       }
@@ -341,7 +404,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       key: `group_key_last`,
       startIndex: _startIndex,
       count: _count,
-      name: items[items.length - 1].color.toUpperCase()
+      name: items[items.length - 1].population
     });
     return groups;
   };
@@ -361,13 +424,13 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
           id: `index_${index}`,
           name: location.name,
           flag: location.flag,
-          color: this._colors[Math.floor(Math.random() * this._colors.length)].toUpperCase()
+          population: location.population
         };
       })
       .sort(this._sortItems);
   };
 
   private _sortItems = (item1: IItem, item2: IItem) => {
-    return item1.color === item2.color ? 0 : item1.color < item2.color ? 1 : -1;
+    return item1.population === item2.population ? 0 : item1.population < item2.population ? 1 : -1;
   };
 }
