@@ -61,7 +61,7 @@ export class KanbanHackthonExample extends React.Component<IKanbanHackthonProps,
 
   private _onRenderLaneItem(item?: IItem, index?: number) {
     return (
-      <div className={classNamesExample.laneItemBorder} style={{ background: '#FCFCFC' }}>
+      <div className={classNamesExample.laneItemBorder} style={{ background: item!.color }}>
         <img src={item!.flag} style={{ width: '100%' }} />
         <div className={classNamesExample.cardDetails}>
           <h4>

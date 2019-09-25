@@ -9,6 +9,7 @@ export interface IItem {
   key: string;
   name: string;
   flag: string;
+  color?: string;
   population: string;
 }
 
@@ -112,8 +113,8 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
       name: 'Indiana',
       population: '6M_7M',
       flag: '//usa.fmcdn.net/data/flags/h80/in.png'
-    }
-    /*
+    },
+    //*
     {
       name: 'Iowa',
       population: '3M_4M',
@@ -141,6 +142,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     },
     {
       name: 'Maryland',
+      population: '5M_6M',
       flag: '//usa.fmcdn.net/data/flags/h80/md.png'
     },
     {
@@ -296,7 +298,6 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
   ].map((item, idx) => {
     return { id: `index_${idx}`, ...item };
   });
-  // private _colors = ['RED', 'BLUE', 'GREEN', 'YELLOW']; //*/, 'INDIGO', 'WHITE', 'PINK', 'ORANGE', 'PURPLE', 'VIOLET'];
   // private _colors = ['0M_1M', '1M-2M', '2M-3M', '3M-4M', '4M-5M', '5M-6M', '6M-7M', '7M-8M', '8M-9M', '9M-10M', 'GT_9M'];
 
   constructor(props: IHackathonDemoProps) {
@@ -321,28 +322,36 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
         key: `lane_column_${group.name}`
       };
     });
+    const dataLink = 'https://en.wikipedia.org/wiki/List_of_states_and_territories_of_the_United_States_by_population#State_rankings';
 
     return (
-      <div>
-        <Toggle label="Kanban mode" inlineLabel checked={isKanbanMode} onChange={this._onChangeCompactMode} styles={toggleStyles} />
-        {isKanbanMode ? (
-          <KanbanHackthonExample items={items} laneColumns={laneColumns} updatItems={this.updateItems} />
-        ) : (
-          <DetailsList
-            componentRef={this._root}
-            items={items}
-            groups={groups}
-            columns={columns}
-            onRenderItemColumn={this._renderItemColumn}
-            ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-            ariaLabelForSelectionColumn="Toggle selection"
-            checkButtonAriaLabel="Row checkbox"
-            groupProps={{
-              showEmptyGroups: true
-            }}
-          />
-        )}
-      </div>
+      <React.Fragment>
+        <div>
+          <Toggle label="Kanban mode" inlineLabel checked={isKanbanMode} onChange={this._onChangeCompactMode} styles={toggleStyles} />
+          {isKanbanMode ? (
+            <KanbanHackthonExample items={items} laneColumns={laneColumns} updatItems={this.updateItems} />
+          ) : (
+            <DetailsList
+              componentRef={this._root}
+              items={items}
+              groups={groups}
+              columns={columns}
+              onRenderItemColumn={this._renderItemColumn}
+              ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+              ariaLabelForSelectionColumn="Toggle selection"
+              checkButtonAriaLabel="Row checkbox"
+              groupProps={{
+                showEmptyGroups: true
+              }}
+            />
+          )}
+        </div>
+        <div style={{ margin: 20 }}>
+          <a href={dataLink} target="_blank">
+            data source (wiki)
+          </a>
+        </div>
+      </React.Fragment>
     );
   }
 
@@ -369,7 +378,15 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
   };
 
   private _bootstrapData = () => {
+    const _colors = ['#AAF1F0', '#0078D42B', '#BAD80A4D', '#FFB90033', '#EA430033', 'WHITE', 'PINK', 'ORANGE', '#0078D45E', 'VIOLET'];
+    let _colorCounter = -1;
     const items: IItem[] = this._getItems();
+    for (let i = 0; i < items.length; i++) {
+      if (i === 0 || items[i - 1].population !== items[i].population) {
+        _colorCounter++;
+      }
+      items[i].color = _colors[_colorCounter];
+    }
     const columns: IColumn[] = [
       { key: 'name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200 },
       { key: 'flag', name: 'Flag', fieldName: 'flag', minWidth: 100, maxWidth: 200 }

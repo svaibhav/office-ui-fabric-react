@@ -48,9 +48,9 @@ const classNames = mergeStyleSets({
   },
   laneWrapper: {
     // border: '1px dashed'
-    backgroundColor: '#AAF1F0',
+    backgroundColor: '#0000001A',
     borderRadius: 5,
-    margin: 1
+    margin: 2
   },
   dragStart: {
     backgroundColor: 'grey'
@@ -70,9 +70,6 @@ export class KanbanBoard extends React.Component<IKanbanBoardProps> {
     super(props);
   }
 
-  private _update() {
-    this.forceUpdate();
-  }
   public render(): JSX.Element {
     return (
       <DragDropContextProvider backend={HTML5Backend}>
@@ -90,6 +87,10 @@ export class KanbanBoard extends React.Component<IKanbanBoardProps> {
         </div>
       </DragDropContextProvider>
     );
+  }
+
+  private _update() {
+    this.forceUpdate();
   }
 }
 class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState> {
