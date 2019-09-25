@@ -384,6 +384,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     for (let i = 0; i < items.length; i++) {
       if (i === 0 || items[i - 1].population !== items[i].population) {
         _colorCounter++;
+        _colorCounter %= _colors.length;
       }
       items[i].color = _colors[_colorCounter];
     }
