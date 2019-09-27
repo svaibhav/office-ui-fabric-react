@@ -133,8 +133,6 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
         item={item}
         index={index}
         onRenderLaneItem={onRenderLaneItem}
-        //    addItem={this._addItem}
-        // deleteItem={this._deleteItem}
         moveItem={this._moveItem}
         parentLaneKey={this.props.laneColumn.key}
         ParentLaneColumn={laneColumn}
@@ -152,22 +150,6 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
     );
   }
 
-  // private _deleteItem = (itemId: any) => {
-  //   const { kanbanBoardStatemgr, laneColumn } = this.props;
-  //   kanbanBoardStatemgr.deleteItem(itemId);
-  //   this.setState(state => {
-  //     // Important: read `state` instead of `this.state` when updating.
-  //     return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
-  //   });
-  //   // const items: any[] = this.state.items.slice();
-  //   // items.splice(index, 1);
-  //   // this.setState({ items: items });
-  //   // // this.setState(state => {
-  //   // //   // Important: read `state` instead of `this.state` when updating.
-  //   // //   return { items: items };
-  //   // // });
-  // };
-
   private _moveItem = (itemId: any, sourceCol: any, destinationCol: any, sourceInx: any, destInx: any): void => {
     const { kanbanBoardStatemgr, laneColumn } = this.props;
 
@@ -177,32 +159,7 @@ class KanbanLane extends React.PureComponent<IKanbanLaneProps, IKanbanLaneState>
       // Important: read `state` instead of `this.state` when updating.
       return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
     });
-
-    // const items: any[] = this.state.items.slice();
-    // const itemToMove = items[sourceIndex];
-    // // remove rule at currentIndex
-    // items.splice(sourceIndex, 1);
-    // if (sourceIndex < destinationIndex) {
-    //   destinationIndex = destinationIndex - 1;
-    // }
-    // // insert rule at moveToIndex
-    // items.splice(destinationIndex, 0, itemToMove);
-    // this.setState(state => {
-    //   // Important: read `state` instead of `this.state` when updating.
-    //   return { items: items };
-    // });
   };
-
-  // private _addItem = (item: any) => {
-  //   const { kanbanBoardStatemgr, laneColumn } = this.props;
-  //   kanbanBoardStatemgr.addItem(item);
-  //   // const items = this.state.items.slice();
-  //   // items.splice(index, 0, item);
-  //   this.setState(state => {
-  //     // Important: read `state` instead of `this.state` when updating.
-  //     return { items: kanbanBoardStatemgr.getLaneItems(laneColumn) };
-  //   });
-  // };
 
   private _updateLane = () => {
     const { kanbanBoardStatemgr, laneColumn } = this.props;
@@ -249,9 +206,6 @@ const dragSourceSpec: DragSourceSpec<any, any> = {
     if (monitor.didDrop()) {
       console.log('Drag end delete item: ', monitor.getItem().index);
       console.log('monitor.getItem().destinationIndex: ', monitor.getItem().destinationIndex);
-      // if (props.parentLaneKey !== monitor.getDropResult().dropTargetParentLaneKey) {
-      //   props.deleteItem(monitor.getItem().dragItem.id);
-      // }
     }
     props.updateLane();
     console.log('Drag end');
@@ -262,7 +216,6 @@ const dropTargetSpec: DropTargetSpec<any> = {
   drop(props: IKanbanLaneItemProps, monitor: DropTargetMonitor, component: React.Component): any {
     // const draggedItem = monitor.getItem();
     console.log('Drop event add item: ', props.index);
-    //if (props.parentLaneKey === monitor.getItem().dragItemParentLaneKey) {
     console.log('Drop event moveitem');
     props.moveItem(
       monitor.getItem().dragItem,
@@ -271,19 +224,13 @@ const dropTargetSpec: DropTargetSpec<any> = {
       monitor.getItem().index,
       props.index
     );
-    // } else {
-    //   console.log('Drop event add itme');
-    //   const item = draggedItem.dragItem;
-    //   item.color = props.ParentLaneColumn.name;
-    //   props.addItem(item);
-    // }
 
     return { dropTargetParentLaneKey: props.parentLaneKey };
     console.log('Drop event');
   },
 
   hover(props: IKanbanLaneItemProps, monitor: DropTargetMonitor, component: React.Component): void {
-    //console.log("onHover");
+    // console.log("onHover");
     const item = monitor.getItem();
     const dragIndex = item.index;
     const hoverIndex = props.index;
