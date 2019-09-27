@@ -238,7 +238,7 @@ export class HackathonDemo extends React.Component<IHackathonDemoProps, IHackath
     {
       name: 'Rhode Island',
       population: '1M_2M',
-      flag: '"//usa.fmcdn.net/data/flags/h80/ri.pn'
+      flag: '//usa.fmcdn.net/data/flags/h80/ri.png'
     },
     {
       name: 'South Carolina',
